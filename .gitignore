@@ -1,3 +1,5 @@
+@see http://www.bmchild.com/2012/06/git-ignore-for-java-eclipse-project.html
+
 # Directories #
 /build/
 /bin/
