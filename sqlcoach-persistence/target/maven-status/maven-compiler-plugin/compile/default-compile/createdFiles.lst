@@ -4,7 +4,6 @@ de\sqlcoach\db\entities\Taskgroup.class
 de\sqlcoach\db\entities\AppStatisticSuccessFail.class
 de\sqlcoach\util\ViewResultRow.class
 de\sqlcoach\db\jpa\DBAppStatistic.class
-de\sqlcoach\db\execution_plan\DatabaseType.class
 de\sqlcoach\db\jpa\DBScenarioTable.class
 de\sqlcoach\util\MetaTableColumn.class
 de\sqlcoach\db\entities\Task.class
