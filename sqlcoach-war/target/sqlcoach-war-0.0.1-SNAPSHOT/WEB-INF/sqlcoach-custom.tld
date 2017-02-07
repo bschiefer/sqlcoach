@@ -1,0 +1,121 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE xml>
+<!-- <taglib xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-JSPtaglibrary_2_0.xsd" version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"> -->
+<taglib 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-JSPtaglibrary_2_0.xsd" 
+	version="2.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee">
+  <display-name>custom</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>custom</short-name>
+  <uri>/webapp/sqlcoach</uri>
+  <tag>
+    <name>box</name>
+    <tag-class>de.sqlcoach.taglib.Box</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>width</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>alert</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>align</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>twoBox</name>
+    <tag-class>de.sqlcoach.taglib.TwoBox</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>area</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+    
+  <tag>
+    <name>tr</name>
+    <tag-class>de.sqlcoach.taglib.TrAlternate</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>row</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+  
+  <tag>
+    <name>table</name>
+    <tag-class>de.sqlcoach.taglib.TableAlternate</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>width</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+
+  <tag>
+    <name>tableForm</name>
+    <tag-class>de.sqlcoach.taglib.TableForm</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>width</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+    
+  <tag>
+    <name>trHLine</name>
+    <tag-class>de.sqlcoach.taglib.TrHorizontalLine</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>colspan</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+       
+  <tag>
+    <name>tdForm</name>
+    <tag-class>de.sqlcoach.taglib.TdForm</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>area</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>width</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag> 
+      
+  <tag>
+    <name>trFormHeader</name>
+    <tag-class>de.sqlcoach.taglib.TrFormHeader</tag-class>
+    <body-content>JSP</body-content>
+  </tag> 
+  
+  <tag>
+    <name>lang</name>
+    <tag-class>de.sqlcoach.taglib.Language</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>current</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>

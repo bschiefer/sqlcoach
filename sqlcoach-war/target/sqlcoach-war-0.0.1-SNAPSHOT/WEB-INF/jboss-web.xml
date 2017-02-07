@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<jboss-web>
+     <resource-ref>
+        <res-ref-name>jdbc/SQLCOACH_USER_DS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <jndi-name>java:/ScenarioDS</jndi-name>
+    </resource-ref>
+<!-- <resource-ref>
+        <res-ref-name>jdbc/SQLCOACH_SCENARIO_2DS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <jndi-name>java:/SQLCOACH_SCENARIO_2DS</jndi-name>
+    </resource-ref> -->
+    <resource-ref>
+        <res-ref-name>jdbc/SQLCOACH_DBADS</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <jndi-name>java:/applicationDS</jndi-name>
+    </resource-ref>   
+</jboss-web>
