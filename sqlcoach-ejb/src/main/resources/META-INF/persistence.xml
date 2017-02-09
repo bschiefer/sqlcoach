@@ -4,7 +4,8 @@
     <!-- <persistence-unit name="postgres" transaction-type="RESOURCE_LOCAL"> -->
     	<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:/applicationDS</jta-data-source>
+        <jta-data-source>java:/OracleAppDS</jta-data-source>
+        <!-- <jta-data-source>java:/applicationDS</jta-data-source> -->
         
         <!-- Entities -->
         <class>de.sqlcoach.db.entities.AppStatistics</class>
