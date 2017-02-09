@@ -4,13 +4,14 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.slf4j.LoggerFactory;
 
 import de.sqlcoach.beans.DBAppStatisticService;
-import de.sqlcoach.db.entities.AppStatistics;
 import de.sqlcoach.db.entities.AppStatisticSuccessFail;
+import de.sqlcoach.db.entities.AppStatistics;
 
 /**
  * Class extends methods to manipulate AppStatistic Entity
@@ -45,25 +46,21 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 	public AppStatistics getLastEntry() {
 		String strQuery = "SELECT e FROM " + ENTITYNAME + " e order by e.id desc";
 		Query query = getEntityManager().createQuery(strQuery);
-		@SuppressWarnings("unchecked")
-		List<AppStatistics> appStatistics = query.setMaxResults(1).getResultList();
+		List<AppStatistics> appStatistics = null;
 
-		if (null == appStatistics) {
-			return null;
+		try {
+			appStatistics = findByQuery(query);
+		} catch (NoResultException nre) {
+			//do nothing
 		}
 
+		if(0 == appStatistics.size()) {
+			LOG.info("No entries for AppStatistic");
+			return null;
+		}
+		
 		LOG.info("Query: {} ", strQuery);
-
-		if (appStatistics.size() > 1) {
-			throw new IllegalStateException("list.size: " + appStatistics.size());
-		}
-		if (appStatistics.size() < 1) {
-			LOG.debug("list.size: {}", appStatistics.size());
-			return null;
-		} else {
-			return appStatistics.get(0);
-		}
-
+		return appStatistics.get(0);
 	}
 
 	private AppStatisticSuccessFail checkSuccessOrFail(Character success, Long taskId, Date from, Date till) {
