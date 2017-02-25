@@ -1,4 +1,4 @@
-package de.sqlcoach.db.execution_plan;
+package de.sqlcoach.db.executionPlan;
 
 import java.sql.Connection;
 

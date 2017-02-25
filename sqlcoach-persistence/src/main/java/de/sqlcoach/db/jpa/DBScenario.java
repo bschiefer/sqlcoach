@@ -1,5 +1,6 @@
 package de.sqlcoach.db.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -19,11 +20,14 @@ import de.sqlcoach.db.entities.Scenario;
 public class DBScenario extends DBBase implements DBScenarioService {
 	private static final Logger LOG = LoggerFactory.getLogger(DBScenario.class);
 	private static final String ENTITYNAME = Scenario.class.getSimpleName();
-	
+	private static final String SEQUENCENAME = "S_SCENARIO";
+
 	private void setAppUserNames(List<Scenario> scenarios) {
 		String appUserNameTmp = null;
 		for (Scenario scenario : scenarios) {
-			appUserNameTmp = scenario.getAppUser().getFirstname() + " " + scenario.getAppUser().getLastname();
+			if(null != scenario.getAppUser().getFirstname()	&& null != scenario.getAppUser().getLastname()) {
+				appUserNameTmp = scenario.getAppUser().getFirstname() + " " + scenario.getAppUser().getLastname();
+			}
 
 			if (scenario.getAppUser().getTitle() != null) {
 				appUserNameTmp = scenario.getAppUser().getTitle() + " " + appUserNameTmp;
@@ -35,13 +39,17 @@ public class DBScenario extends DBBase implements DBScenarioService {
 
 	private void setAppUserName(Scenario scenario) {
 		String appUserNameTmp = null;
-		appUserNameTmp = scenario.getAppUser().getFirstname() + " " + scenario.getAppUser().getLastname();
+		if (null != scenario.getAppUser()) {
+			if(null != scenario.getAppUser().getFirstname()	&& null != scenario.getAppUser().getLastname()) {
+				appUserNameTmp = scenario.getAppUser().getFirstname() + " " + scenario.getAppUser().getLastname();
+			}
+			
+			if (scenario.getAppUser().getTitle() != null) {
+				appUserNameTmp = scenario.getAppUser().getTitle() + " " + appUserNameTmp;
+			}
 
-		if (scenario.getAppUser().getTitle() != null) {
-			appUserNameTmp = scenario.getAppUser().getTitle() + " " + appUserNameTmp;
+			scenario.setAppUserName(appUserNameTmp);
 		}
-
-		scenario.setAppUserName(appUserNameTmp);
 	}
 
 	@Override
@@ -49,7 +57,9 @@ public class DBScenario extends DBBase implements DBScenarioService {
 		String strQuery = "SELECT s FROM " + ENTITYNAME + " s ORDER BY s.id";
 		Query query = getEntityManager().createQuery(strQuery);
 		List<Scenario> scenarios = findByQuery(query);
-		setAppUserNames(scenarios);
+		if (null != scenarios) {
+			setAppUserNames(scenarios);
+		}
 
 		LOG.info("Query: {} \nSize: {}", strQuery, scenarios.size());
 		return scenarios;
@@ -63,8 +73,10 @@ public class DBScenario extends DBBase implements DBScenarioService {
 		Query query = getEntityManager().createQuery(strQuery);
 		query.setParameter("id", id);
 		Scenario scenario = findByQuerySingleResult(query);
-		setAppUserName(scenario);
-		
+		if (null != scenario) {
+			setAppUserName(scenario);
+		}
+
 		LOG.info("Query: {} ", strQuery);
 		return scenario;
 	}
@@ -83,11 +95,17 @@ public class DBScenario extends DBBase implements DBScenarioService {
 
 	@Override
 	public void insert(Scenario scenario) {
+		scenario.setId(generateNextId(SEQUENCENAME));
+		scenario.setDateCreate(new Date());
+		scenario.setDateLastMod(new Date());
 		super.insertT(scenario);
 	}
 
 	@Override
 	public Scenario update(Scenario scenario) {
+		Scenario scenarioTmp = this.get(scenario.getId());
+		scenario.setDateCreate(scenarioTmp.getDateCreate());
+		scenario.setDateLastMod(new Date());
 		return super.updateT(scenario);
 	}
 

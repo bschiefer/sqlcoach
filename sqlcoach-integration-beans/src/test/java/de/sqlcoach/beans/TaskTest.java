@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.sqlcoach.beans.DBTaskService;
 import de.sqlcoach.db.entities.Task;
 
 public class TaskTest {
@@ -17,12 +18,12 @@ public class TaskTest {
 		
 		if(null != lookUpTaskJPA() && null != lookUpTaskJDBC()) {
 			String id = "";
-			taskJPA = lookUpTaskJPA().get(id);
+//			taskJPA = lookUpTaskJPA().get(id);
 			taskJDBC = lookUpTaskJDBC().get(id);
 			taskJDBC.toString().equals(taskJPA.toString());
 			
 			String scenarioId = "";
-			tasksJPA = lookUpTaskJPA().getByScenarioId(scenarioId);
+//			tasksJPA = lookUpTaskJPA().getByScenarioId(scenarioId);
 			tasksJDBC = lookUpTaskJDBC().getByScenarioId(scenarioId);
 			tasksJDBC.toString().equals(tasksJPA.toString());
 			

@@ -8,12 +8,14 @@
 	<name>SQLcoach</name>
 	<description>SQLcoach - Train Your SQL Knowledge</description>
 
-	<modules>
-		<module>sqlcoach-ear</module>
-		<module>sqlcoach-ejb</module>
+	<modules>		
 		<module>sqlcoach-persistence</module>
+		<module>sqlcoach-ejb</module>
 		<module>sqlcoach-war</module>
+		<module>sqlcoach-ear</module>
 		<!-- <module>sqlcoach-integration-beans</module> -->
+		<module>sqlcoach-ejb-jdbc</module>
+		<module>sqlcoach-integration-test</module>
 	</modules>
 
 	<properties>

@@ -104,9 +104,9 @@ public class StatisticController extends HttpServlet {
 		final Collection<Taskgroup> taskgroupCol = dbTaskgroupService.getByScenarioId(scenario);
 
 		for (Taskgroup tg : taskgroupCol) { // run through all Task groups
-			Task task = new Task();
-			task.setId(tg.getId());
-			Collection<Task> taskColTmp = dbTaskService.getByTaskgroupId(task);
+			Taskgroup taskgroup = new Taskgroup();
+			taskgroup.setId(tg.getId());
+			Collection<Task> taskColTmp = dbTaskService.getByTaskgroupId(taskgroup);
 			Collection<Task> taskColFinal = new ArrayList<Task>();
 
 			for (Task t : taskColTmp) { // run through each task

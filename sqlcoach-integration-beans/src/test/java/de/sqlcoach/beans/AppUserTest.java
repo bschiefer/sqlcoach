@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.sqlcoach.beans.DBAppUserService;
 import de.sqlcoach.db.entities.AppUser;
 
 public class AppUserTest {

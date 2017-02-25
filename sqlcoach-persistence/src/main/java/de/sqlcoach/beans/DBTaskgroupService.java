@@ -13,7 +13,7 @@ import de.sqlcoach.db.entities.Taskgroup;
  */
 public interface DBTaskgroupService {
 	public static final String BEANNAME = "TaskgroupBean";
-	public Taskgroup get(String id);
+	public Taskgroup get(Long id);
 	public List<Taskgroup> getAll();
 	public List<Taskgroup> getByScenarioId(Scenario scenarioId);
 	public void insert(Taskgroup taskgroup);

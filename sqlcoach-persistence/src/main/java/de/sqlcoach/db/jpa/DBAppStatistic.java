@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.slf4j.LoggerFactory;
@@ -23,6 +22,7 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(DBAppStatistic.class);
 	private static final String ENTITYNAME = AppStatistics.class.getSimpleName();
+	private static final String SEQUENCENAME = "S_APP_STATISTIC";
 
 	public DBAppStatistic() {
 		// nothing
@@ -40,27 +40,6 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 		LOG.info("Query: {} ", strQuery);
 
 		return appStatistics;
-	}
-
-	@Override
-	public AppStatistics getLastEntry() {
-		String strQuery = "SELECT e FROM " + ENTITYNAME + " e order by e.id desc";
-		Query query = getEntityManager().createQuery(strQuery);
-		List<AppStatistics> appStatistics = null;
-
-		try {
-			appStatistics = findByQuery(query);
-		} catch (NoResultException nre) {
-			//do nothing
-		}
-
-		if(0 == appStatistics.size()) {
-			LOG.info("No entries for AppStatistic");
-			return null;
-		}
-		
-		LOG.info("Query: {} ", strQuery);
-		return appStatistics.get(0);
 	}
 
 	private AppStatisticSuccessFail checkSuccessOrFail(Character success, Long taskId, Date from, Date till) {
@@ -131,6 +110,7 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 
 	@Override
 	public void insert(AppStatistics appStatistic) {
+		appStatistic.setId(generateNextId(SEQUENCENAME));
 		super.insertT(appStatistic);
 	}
 

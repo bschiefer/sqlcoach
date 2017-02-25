@@ -25,6 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import de.sqlcoach.bean.ExerciseForm;
 import de.sqlcoach.bean.ScenarioTableForm;
 import de.sqlcoach.beans.DBScenarioTableService;
+import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.db.entities.ScenarioTable;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 
@@ -66,30 +67,29 @@ public class ScenarioTableAction extends Action {
 		}
 
 		ScenarioTableForm scenarioTableForm = (ScenarioTableForm) form;
-		ScenarioTable model = new ScenarioTable();
+		ScenarioTable scenarioTable = new ScenarioTable();
 
 		DBScenarioTableService dbScenarioTableService = DBRemoteEJBClient.getEJB(DBScenarioTableService.class.getName(),
 				DBScenarioTableService.BEANNAME);
 
 		if (scenarioTableForm.getAction().equals("add") || scenarioTableForm.getAction().equals("update")) {
 
-			// TODO rename getId to getScenarioID
-			model.getId().setId(Long.valueOf(scenarioTableForm.getScenarioId()));
+			Scenario scenario = new Scenario();
+			scenario.setId(Long.valueOf(scenarioTableForm.getScenarioId()));
+			scenarioTable.setScenario(scenario);
 
 			// delete all with this scenarioId
 			// resultDelete = DBScenarioTable.delete(cn.getCn(),
 			// scenarioTableForm.getScenarioId());
-			/**
-			 * TODO check delete
-			 */
-			dbScenarioTableService.delete(model);
+
+			dbScenarioTableService.deleteByScenarioId(Long.valueOf(scenarioTableForm.getScenarioId()));
 
 			String[] tableAr = scenarioTableForm.getScenarioTable();
 			for (int i = 0; i < tableAr.length; i++) {
-				model.setScenarioTable(tableAr[i]);
-				System.out.println(model);
+				scenarioTable.setScenarioTable(tableAr[i]);
+				System.out.println(scenarioTable);
 				// add each
-				dbScenarioTableService.insert(model);
+				dbScenarioTableService.insert(scenarioTable);
 			}
 		}
 

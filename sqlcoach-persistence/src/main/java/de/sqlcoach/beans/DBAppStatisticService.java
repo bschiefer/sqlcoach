@@ -15,7 +15,6 @@ import de.sqlcoach.db.entities.AppStatistics;
 public interface DBAppStatisticService {
 	public static final String BEANNAME = "AppStatisticsBean";
 	public AppStatistics get(Long id);
-	public AppStatistics getLastEntry();
 	public List<AppStatistics> selectAll();
 	public AppStatisticSuccessFail getByTaskId(Long taskId, Date from, Date till);
 	public void insert(AppStatistics appStatistic);

@@ -30,6 +30,7 @@ import de.sqlcoach.beans.DBScenarioService;
 import de.sqlcoach.beans.DBTaskService;
 import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.db.entities.Task;
+import de.sqlcoach.db.entities.Taskgroup;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 
 /**
@@ -66,7 +67,7 @@ public class TaskAction extends Action {
 
 		Scenario scenario = null;
 
-		final Task model = new Task();
+		final Task task = new Task();
 		DBTaskService dbTaskService = DBRemoteEJBClient.getEJB(DBTaskService.class.getName(), DBTaskService.BEANNAME);
 		DBScenarioService dbScenarioService = DBRemoteEJBClient.getEJB(DBScenarioService.class.getName(),
 				DBScenarioService.BEANNAME);
@@ -78,21 +79,23 @@ public class TaskAction extends Action {
 				log.info("MPA taskForm.getQuery(): " + taskForm.getQuery());
 
 				// TODO namen anpassen getTaskgroup
-				model.getTaskgroup().setId(Long.valueOf(taskForm.getTaskgroupId()));
-				model.setDescription(taskForm.getDescription());
-				model.setQuery(taskForm.getQuery());
-				model.setHint(taskForm.getHint());
-				model.setHint_trials(taskForm.getHint_trials());
+				Taskgroup taskgroup = new Taskgroup();
+				taskgroup.setId(Long.valueOf(taskForm.getTaskgroupId()));
+				task.setTaskgroup(taskgroup);
+				task.setDescription(taskForm.getDescription());
+				task.setQuery(taskForm.getQuery());
+				task.setHint(taskForm.getHint());
+				task.setHint_trials(taskForm.getHint_trials());
 
 				// add
 				if (taskForm.getAction().equals("add")) {
-					dbTaskService.insert(model);
+					dbTaskService.insert(task);
 				}
 
 				// update
 				if (taskForm.getAction().equals("update")) {
-					model.setId(Long.valueOf(taskForm.getId()));
-					dbTaskService.update(model);
+					task.setId(Long.valueOf(taskForm.getId()));
+					dbTaskService.update(task);
 				}
 			}
 
@@ -101,8 +104,8 @@ public class TaskAction extends Action {
 			scenario = dbScenarioService.get(Long.valueOf(param.getScenarioId()));
 
 		} else if (taskForm.getAction().equals("delete")) {
-			model.setId(Long.valueOf(taskForm.getId()));
-			dbTaskService.delete(model);
+			task.setId(Long.valueOf(taskForm.getId()));
+			dbTaskService.delete(task);
 		}
 
 		// get or update
@@ -110,7 +113,7 @@ public class TaskAction extends Action {
 			// Trainee Solution as ViewResultSet
 			DBConnectionService dbConnectionService = DBRemoteEJBClient.getEJB(DBConnectionService.class.getName(),
 					DBConnectionService.BEANNAME);
-			final ViewResultSet adminViewResultSet = dbConnectionService.get(taskForm.getQuery(), scenario.getDatasource());
+			final ViewResultSet adminViewResultSet = dbConnectionService.get(taskForm.getQuery(), scenario);
 
 			request.setAttribute("nameResultSet", "adminViewResultSet");
 			request.setAttribute("adminViewResultSet", adminViewResultSet);

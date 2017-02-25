@@ -49,12 +49,12 @@ public class ScenarioTable implements Serializable{
 		LOG.debug("enter ScenarioTable");
 	}
 
-	public Scenario getId() {
+	public Scenario getScenario() {
 		return scenario;
 	}
 
-	public void setId(Scenario id) {
-		this.scenario = id;
+	public void setScenario(Scenario scenario) {
+		this.scenario = scenario;
 	}
 
 	public String getScenarioTable() {

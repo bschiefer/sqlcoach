@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.sqlcoach.beans.DBScenarioService;
 import de.sqlcoach.db.entities.Scenario;
 
 public class ScenarioTest {
@@ -17,7 +18,7 @@ public class ScenarioTest {
 		
 		if(null != lookUpScenarioJPA() && null != lookUpScenarioJDBC()) {
 			String id = "";
-			scenarioJPA = lookUpScenarioJPA().get(id);
+//			scenarioJPA = lookUpScenarioJPA().get(id);
 			scenarioJDBC = lookUpScenarioJDBC().get(id);
 			scenarioJDBC.toString().equals(scenarioJPA.toString());
 			

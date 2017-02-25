@@ -1,5 +1,6 @@
 package de.sqlcoach.db.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -20,6 +21,7 @@ import de.sqlcoach.db.entities.AppUser;
 public class DBAppUser extends DBBase implements DBAppUserService {
 	private static final Logger LOG = LoggerFactory.getLogger(DBAppUser.class);
 	private static final String ENTITYNAME = AppUser.class.getName();
+	private static final String SEQUENCENAME = "S_APP_USER";
 
 	/** The Constant TABLENAME. */
 	Table table = AppUser.class.getAnnotation(Table.class);
@@ -61,11 +63,21 @@ public class DBAppUser extends DBBase implements DBAppUserService {
 
 	@Override
 	public void insert(AppUser appUser) {
+		appUser.setId(generateNextId(SEQUENCENAME));
+		appUser.setDatecreate(new Date());
+		appUser.setDatelastmod(new Date());
 		super.insertT(appUser);
 	}
 
 	@Override
 	public AppUser update(AppUser appUser) {
+		AppUser appUserTmp = this.get(appUser.getId());
+		//AppUser changed without changes on password
+		if(null == appUser.getPassword()){
+			appUser.setPassword(appUserTmp.getPassword());
+		}
+		appUser.setDatecreate(appUserTmp.getDatecreate());
+		appUser.setDatelastmod(new Date());
 		return super.updateT(appUser);
 	}
 

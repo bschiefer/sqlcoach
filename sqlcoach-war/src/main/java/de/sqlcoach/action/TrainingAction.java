@@ -71,13 +71,9 @@ public class TrainingAction extends Action {
 
 		// establish connection with own Datasource
 		// Trainee Solution as ViewResultSet
-
-		/**
-		 * TODO getDatasource mitgeben
-		 */
 		DBConnectionService dbConnectionService = DBRemoteEJBClient.getEJB(DBConnectionService.class.getName(),
 				DBConnectionService.BEANNAME);
-		final ViewResultSet traineeViewResultSet = dbConnectionService.get(tf.getQuery(), scenario.getDatasource());
+		final ViewResultSet traineeViewResultSet = dbConnectionService.get(tf.getQuery(), scenario);
 
 		if (traineeViewResultSet == null)
 			Alert.catchError("alert.error.wrongQuery", request);
@@ -89,7 +85,7 @@ public class TrainingAction extends Action {
 		request.setAttribute("traineeViewResultSetCount", resultCnt);
 
 		// explain plan
-		final ViewResultSet explain = dbConnectionService.getExplainPlan(tf.getQuery(), scenario.getDatasource());
+		final ViewResultSet explain = dbConnectionService.getExplainPlan(tf.getQuery(), scenario);
 
 		if (explain == null)
 			Alert.catchError("alert.error.wrongQuery", request);

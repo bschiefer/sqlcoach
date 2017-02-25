@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,7 +34,6 @@ import de.sqlcoach.util.LoginCheck;
  * @author <a href="http://www.christophgerstle.de">Christoph Gerstle</a>
  */
 public class UserAction extends Action {
-	private static final Logger log = Logger.getLogger(UserAction.class);
 
 	/*
 	 * (non-Javadoc)

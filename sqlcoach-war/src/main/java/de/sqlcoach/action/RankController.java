@@ -69,7 +69,7 @@ public class RankController extends HttpServlet {
 		Boolean result = false;
 
 		if (param.getView().equals("taskgroup")) {
-			final Taskgroup taskgroup = dbTaskgroupService.get(param.getTaskgroupId());
+			final Taskgroup taskgroup = dbTaskgroupService.get(Long.valueOf(param.getTaskgroupId()));
 			if (param.getStatus().equals("rank_up")) {
 				result = dbTaskgroupService.rankUp(taskgroup);
 			}

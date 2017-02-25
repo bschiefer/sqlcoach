@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.sqlcoach.beans.DBTaskgroupService;
 import de.sqlcoach.db.entities.Taskgroup;
 
 public class TaskgroupTest {

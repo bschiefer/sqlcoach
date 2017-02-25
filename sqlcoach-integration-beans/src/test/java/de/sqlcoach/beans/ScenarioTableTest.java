@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.sqlcoach.beans.DBScenarioTableService;
 import de.sqlcoach.db.entities.ScenarioTable;
 
 public class ScenarioTableTest {
@@ -21,7 +22,7 @@ public class ScenarioTableTest {
 			scenarioTableJDBC.toString().equals(scenarioTableJPA.toString());
 			
 			String id = "";
-			scenarioTablesJPA = lookUpScenarioTableJPA().getByScenarioId(id);
+//			scenarioTablesJPA = lookUpScenarioTableJPA().getByScenarioId(id);
 			scenarioTablesJDBC = lookUpScenarioTableJDBC().getByScenarioId(id);
 			scenarioTablesJDBC.toString().equals(scenarioTablesJPA.toString());
 			

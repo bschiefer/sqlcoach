@@ -148,7 +148,7 @@ public class TrainingController extends HttpServlet {
 			tf.setTaskgroupId(task.getTaskgroup().getId().toString());
 		}
 
-		Taskgroup taskgroup = ParamUtil.isNull(tf.getTaskgroupId()) ? null : dbTaskgroupService.get(tf.getTaskgroupId());
+		Taskgroup taskgroup = ParamUtil.isNull(tf.getTaskgroupId()) ? null : dbTaskgroupService.get(Long.valueOf(tf.getTaskgroupId()));
 
 		request.setAttribute("taskgroup", taskgroup);
 
@@ -176,17 +176,17 @@ public class TrainingController extends HttpServlet {
 
 		ViewResultSet viewResultSet = null;
 			if (metaTableCol == null) { // Metainfo in Session puffern (bs)
-				metaTableCol = dbConnectionService.readByScenarioTableCol(scenarioTableCol, scenario.getDatasource());
+				metaTableCol = dbConnectionService.readByScenarioTableCol(scenarioTableCol, scenario);
 				request.getSession().setAttribute("metaTableCol", metaTableCol);
-				final String db_prodname = dbConnectionService.getDatabaseProductName(scenario.getDatasource());
-				final String db_prodversion = dbConnectionService.getDatabaseProductVersion(scenario.getDatasource());
+				final String db_prodname = dbConnectionService.getDatabaseProductName(scenario);
+				final String db_prodversion = dbConnectionService.getDatabaseProductVersion(scenario);
 				request.getSession().setAttribute("db_prodname", db_prodname);
 				request.getSession().setAttribute("db_prodversion", db_prodversion);
 			}
 
 			// Sample Solution as ViewResultSet (based on admin query)
 			try {
-				viewResultSet = (task != null) ? dbConnectionService.get(task.getQuery(), scenario.getDatasource()) : null;
+				viewResultSet = (task != null) ? dbConnectionService.get(task.getQuery(), scenario) : null;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -225,12 +225,6 @@ public class TrainingController extends HttpServlet {
 
 				appStatistics.setTask(taskTmp);
 				appStatistics.setSuccess(equals);
-
-				if (null != dbAppStatisticService.getLastEntry()) {
-					appStatistics.setId(dbAppStatisticService.getLastEntry().getId() + 1);
-				} else {
-					appStatistics.setId(1L);
-				}
 
 				dbAppStatisticService.insert(appStatistics);
 

@@ -25,6 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import de.sqlcoach.bean.ExerciseForm;
 import de.sqlcoach.bean.TaskgroupForm;
 import de.sqlcoach.beans.DBTaskgroupService;
+import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.db.entities.Taskgroup;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 
@@ -62,31 +63,32 @@ public class TaskgroupAction extends Action {
 			return mapping.findForward("forward");
 		}
 
-		final Taskgroup model = new Taskgroup();
+		final Taskgroup taskgroup = new Taskgroup();
 
 		DBTaskgroupService dbTaskgroupService = DBRemoteEJBClient.getEJB(DBTaskgroupService.class.getName(),
 				DBTaskgroupService.BEANNAME);
 
 		if (action.equals("add") || action.equals("update")) {
 			if (!taskgroupForm.getDescription().equals("")) {
-
-				model.getScenario().setId(Long.valueOf(taskgroupForm.getScenarioId()));
-				model.setDescription(taskgroupForm.getDescription());
+				Scenario scenario = new Scenario();
+				scenario.setId(Long.valueOf(taskgroupForm.getScenarioId()));
+				taskgroup.setScenario(scenario);
+				taskgroup.setDescription(taskgroupForm.getDescription());
 
 				if (action.equals("add")) {
-					dbTaskgroupService.insert(model);
+					dbTaskgroupService.insert(taskgroup);
 				}
 
 				if (action.equals("update")) {
-					model.setId(Long.valueOf(taskgroupForm.getId()));
-					dbTaskgroupService.update(model);
+					taskgroup.setId(Long.valueOf(taskgroupForm.getId()));
+					dbTaskgroupService.update(taskgroup);
 				}
 			}
 		}
 
 		if (action.equals("delete")) {
-			model.setId(Long.valueOf(taskgroupForm.getId()));
-			dbTaskgroupService.delete(model);
+			taskgroup.setId(Long.valueOf(taskgroupForm.getId()));
+			dbTaskgroupService.delete(taskgroup);
 		}
 
 		return mapping.findForward("forward");

@@ -1,5 +1,6 @@
 package de.sqlcoach.db.jpa;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -53,11 +54,17 @@ public class DBScenarioTable extends DBBase implements DBScenarioTableService {
 
 	@Override
 	public void insert(ScenarioTable scenarioTable) {
+		scenarioTable.setDateCreate(new Date());
+		scenarioTable.setDateLastMod(new Date());
 		super.insertT(scenarioTable);
 	}
 
 	@Override
 	public ScenarioTable update(ScenarioTable scenarioTable) {
+		//TODO scenarioTable.getId().getId() zu scenarioTable.getScenario().getId()
+		ScenarioTable scenarioTableTmp = this.get(scenarioTable.getScenario().getId());
+		scenarioTable.setDateCreate(scenarioTableTmp.getDateCreate());
+		scenarioTable.setDateLastMod(new Date());
 		return super.updateT(scenarioTable);
 	}
 
@@ -65,4 +72,13 @@ public class DBScenarioTable extends DBBase implements DBScenarioTableService {
 	public void delete(ScenarioTable scenarioTable) {
 		super.deleteT(scenarioTable);
 	}
+	
+	@Override
+	public void deleteByScenarioId(Long scenarioId) {
+		String strQuery = "DELETE FROM " + ENTITYNAME + " e WHERE e.scenario.id=:scenarioId";
+		Query query = getEntityManager().createQuery(strQuery);
+		query.setParameter("scenarioId", scenarioId);
+		query.executeUpdate();
+	}
+
 }

@@ -1,0 +1,3 @@
+create table APP_USER (id int8 not null, dateLastMod timestamp not null, datecreate timestamp not null, email varchar(255), firstname varchar(255), lastname varchar(255), nickname varchar(255) not null, password varchar(255) not null, role varchar(255), title varchar(255), primary key (id))
+create table SCENARIO (id int8 not null, datasource varchar(255) not null, dateCreate timestamp not null, dateLastMod timestamp not null, description varchar(255) not null, app_user_id int8, primary key (id))
+alter table SCENARIO add constraint FK9m04x9g7ttfa5gjnth71dkvyi foreign key (app_user_id) references APP_USER

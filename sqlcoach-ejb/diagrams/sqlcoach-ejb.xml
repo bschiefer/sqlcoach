@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE xml>
-<entities>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
 		<entity-name>de.sqlcoach.db.entities.ScenarioTable</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>166</entity-height>
-		<entity-X-Coordinate>325</entity-X-Coordinate>
-		<entity-Y-Coordinate>10</entity-Y-Coordinate>
+		<entity-X-Coordinate>308</entity-X-Coordinate>
+		<entity-Y-Coordinate>22</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -15,7 +13,7 @@
 	<entity>
 		<entity-name>de.sqlcoach.db.entities.Task</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>266</entity-height>
+		<entity-height>406</entity-height>
 		<entity-X-Coordinate>50</entity-X-Coordinate>
 		<entity-Y-Coordinate>338</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -36,9 +34,9 @@
 
 	<entity>
 		<entity-name>de.sqlcoach.db.entities.Scenario</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
-		<entity-X-Coordinate>325</entity-X-Coordinate>
+		<entity-width>155</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>290</entity-X-Coordinate>
 		<entity-Y-Coordinate>228</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
@@ -48,9 +46,9 @@
 	<entity>
 		<entity-name>de.sqlcoach.db.entities.Taskgroup</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
-		<entity-X-Coordinate>710</entity-X-Coordinate>
-		<entity-Y-Coordinate>348</entity-Y-Coordinate>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>685</entity-X-Coordinate>
+		<entity-Y-Coordinate>350</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -60,8 +58,8 @@
 		<entity-name>de.sqlcoach.db.entities.AppUser</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>268</entity-height>
-		<entity-X-Coordinate>710</entity-X-Coordinate>
-		<entity-Y-Coordinate>54</entity-Y-Coordinate>
+		<entity-X-Coordinate>685</entity-X-Coordinate>
+		<entity-Y-Coordinate>50</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

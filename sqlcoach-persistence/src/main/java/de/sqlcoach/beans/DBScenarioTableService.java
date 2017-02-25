@@ -18,4 +18,5 @@ public interface DBScenarioTableService {
 	public void insert(ScenarioTable scenarioTable);
 	public ScenarioTable update(ScenarioTable scenarioTable);
 	public void delete(ScenarioTable scenarioTable);
+	public void deleteByScenarioId(Long scenarioId);
 }

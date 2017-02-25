@@ -25,6 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import de.sqlcoach.bean.ExerciseForm;
 import de.sqlcoach.bean.ScenarioForm;
 import de.sqlcoach.beans.DBScenarioService;
+import de.sqlcoach.db.entities.AppUser;
 import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 
@@ -69,26 +70,29 @@ ScenarioAction extends Action {
 
 		final ScenarioForm scenarioForm = (ScenarioForm) form;
 
-		Scenario model = new Scenario();
+		Scenario scenario = new Scenario();
 		DBScenarioService dbScenarioService = DBRemoteEJBClient.getEJB(DBScenarioService.class.getName(),
 				DBScenarioService.BEANNAME);
 
 		if (scenarioForm.getAction().equals("add") || scenarioForm.getAction().equals("update")) {
 			if (!scenarioForm.getDescription().equals("") || !scenarioForm.getDatasource().equals("")) {
 
-				model.getAppUser().setId(Long.valueOf(scenarioForm.getAppUserId()));
-				model.setDescription(scenarioForm.getDescription());
-				model.setDatasource(scenarioForm.getDatasource());
+				AppUser appUser = new AppUser();
+				appUser.setId(Long.valueOf(scenarioForm.getAppUserId()));
+				scenario.setAppUser(appUser);
+				scenario.setDescription(scenarioForm.getDescription());
+				scenario.setDatasource(scenarioForm.getDatasource());
+				scenario.setDatabaseProductName(scenarioForm.getDatabaseProductName());
 
 				// add
 				if (scenarioForm.getAction().equals("add")) {
-					dbScenarioService.insert(model);
+					dbScenarioService.insert(scenario);
 				}
 
 				// update
 				if (scenarioForm.getAction().equals("update")) {
-					model.setId(Long.valueOf(scenarioForm.getId()));
-					dbScenarioService.update(model);
+					scenario.setId(Long.valueOf(scenarioForm.getId()));
+					dbScenarioService.update(scenario);
 				}
 
 				// request for 2nd page scenariotables
@@ -104,8 +108,8 @@ ScenarioAction extends Action {
 				request.setAttribute("scenario_id", scenarioForm.getScenarioId());
 			}
 		} else if (scenarioForm.getAction().equals("delete")) {
-			model.setId(Long.valueOf(scenarioForm.getId()));
-			dbScenarioService.delete(model);
+			scenario.setId(Long.valueOf(scenarioForm.getId()));
+			dbScenarioService.delete(scenario);
 		}
 
 		return mapping.findForward("forward");

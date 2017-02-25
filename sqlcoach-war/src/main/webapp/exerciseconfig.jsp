@@ -83,6 +83,18 @@
         <custom:tdForm area="right"><html:text property="datasource" maxlength="24" value="${scenarioUpdate.datasource}"/>
         </custom:tdForm>
       </tr>
+      <tr>
+        <custom:tdForm area="left">Datenbanktyp</custom:tdForm>
+        <custom:tdForm area="right">
+        	<html:select property="databaseProductName" value="${scenarioUpdate.databaseProductName}">
+                <html:option value="">Wähle Datenbanktyp</html:option>
+                <html:option value="oracle">Oracle</html:option>
+                <html:option value="sapdb">Sap DB</html:option>
+                <html:option value="mysql">MySQL</html:option>
+                <html:option value="postgresql">Postgres</html:option>
+            </html:select>
+        </custom:tdForm>
+      </tr>
       <custom:trHLine/>
       <tr>
         <td></td>

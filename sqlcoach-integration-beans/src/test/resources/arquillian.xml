@@ -1,0 +1,19 @@
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+	<container qualifier="wildfly" default="true">
+		<configuration>
+			<property name="jbossHome">C:\wildfly-10.0.0.CR2</property>
+
+			<!-- <property name="outputToConsole">true</property> <property name="allowConnectingToRunningServer">true</property> 
+				<property name="serverConfig">standalone-test.xml</property> <property name="outputToConsole">true</property> 
+				<property name="allowConnectingToRunningServer">true</property> -->
+		</configuration>
+	</container>
+
+	<!-- <container qualifier="widlfly-remote" default="true"> </container> -->
+
+</arquillian>

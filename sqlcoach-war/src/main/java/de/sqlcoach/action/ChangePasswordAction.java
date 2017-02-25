@@ -66,8 +66,8 @@ public class ChangePasswordAction extends Action {
 
 			// super-admins are allowed to change password without giving
 			// the old one
-			if ((appUser.getPassword().equals(DBUtil.encrypt(changePasswordForm.getOldPassword())))
-					|| (LoginCheck.isSuperAdmin(session))) {
+			if ((LoginCheck.isSuperAdmin(session)) ||
+					(appUser.getPassword().equals(DBUtil.encrypt(changePasswordForm.getOldPassword())))) {
 
 				appUser.setPassword(DBUtil.encrypt(changePasswordForm.getNewPassword()));
 				dbAppUserService.update(appUser);

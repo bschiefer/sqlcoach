@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>de.hskl.sqlcoach</groupId>
+    <artifactId>sqlcoach</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>sqlcoach-ejb-jdbc</artifactId>
+  <packaging>ejb</packaging>
+  
+  <dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<!-- https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html 
+			-DgroupId=sapdbc -DartifactId=sapdbc -Dversion=7.7.07.50 -Dpackaging=jar -->
+		<dependency>
+			<groupId>sapdbc</groupId>
+			<artifactId>sapdbc</artifactId>
+			<version>7.7.07.50</version>
+		</dependency>
+		<!-- Import the EJB API. -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Import the JPA API. -->
+		<!-- <dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+	</dependencies>
+	<build>
+		<!-- Specify the artifact name, this is referred to in the EAR's application.xml -->
+		<finalName>${project.artifactId}</finalName>
+		<!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation 
+			processors -->
+		<plugins>
+			<plugin>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<version>${version.ejb.plugin}</version>
+				<configuration>
+					<!-- Tell Maven we are using EJB 3.1 -->
+					<ejbVersion>3.1</ejbVersion>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

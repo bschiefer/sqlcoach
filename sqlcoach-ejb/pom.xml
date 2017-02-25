@@ -9,6 +9,7 @@
 	</parent>
 
 	<artifactId>sqlcoach-ejb</artifactId>
+	<packaging>ejb</packaging>
 
 	<dependencies>
 		<dependency>

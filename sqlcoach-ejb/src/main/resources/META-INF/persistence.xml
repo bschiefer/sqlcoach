@@ -4,8 +4,8 @@
     <!-- <persistence-unit name="postgres" transaction-type="RESOURCE_LOCAL"> -->
     	<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:/OracleAppDS</jta-data-source>
-        <!-- <jta-data-source>java:/applicationDS</jta-data-source> -->
+        <!-- <jta-data-source>java:/OracleAppDS</jta-data-source> -->
+        <jta-data-source>java:/applicationDS</jta-data-source>
         
         <!-- Entities -->
         <class>de.sqlcoach.db.entities.AppStatistics</class>
@@ -17,7 +17,8 @@
         
         
         <properties>
-        	<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+        	<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.SAPDBDialect"/> -->
+        	<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
         

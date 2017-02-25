@@ -1,6 +1,7 @@
 package de.sqlcoach.db.jpa;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import de.sqlcoach.beans.DBTaskService;
 import de.sqlcoach.db.entities.Task;
+import de.sqlcoach.db.entities.Taskgroup;
 import de.sqlcoach.util.DBUtil;
 
  /**
@@ -22,6 +24,8 @@ import de.sqlcoach.util.DBUtil;
 public class DBTask extends DBBase implements DBTaskService {
 	private static final Logger LOG = LoggerFactory.getLogger(DBTask.class);
 	private static final String ENTITYNAME = Task.class.getSimpleName();
+	private static final String SEQUENCENAME_TASK = "S_TASK";
+	private static final String SEQUENCENAME_TASK_RANK = "S_TASK_RANK";
 	
 	private Boolean isUpdated;
 
@@ -54,11 +58,11 @@ public class DBTask extends DBBase implements DBTaskService {
 	}
 
 	@Override
-	public List<Task> getByTaskgroupId(Task task) {
+	public List<Task> getByTaskgroupId(Taskgroup taskgroup) {
 		String strQuery = "SELECT e FROM " + ENTITYNAME + " e WHERE e.taskgroup.id=:taskgroupId ORDER BY e.rank";
 		TypedQuery<Task> query = getEntityManager().createQuery(strQuery, Task.class);
 
-		query.setParameter("taskgroupId", task.getTaskgroup().getId());
+		query.setParameter("taskgroupId", taskgroup.getId());
 		List<Task> tasks = findByQuery(query);
 
 		int number = 1;
@@ -152,11 +156,19 @@ public class DBTask extends DBBase implements DBTaskService {
 
 	@Override
 	public void insert(Task task) {
+		task.setId(generateNextId(SEQUENCENAME_TASK));
+		task.setRank(generateNextId(SEQUENCENAME_TASK_RANK).intValue());
+		task.setDateCreate(new Date());
+		task.setDateLastMod(new Date());
 		super.insertT(task);
 	}
 
 	@Override
 	public Task update(Task task) {
+		Task taskTmp = this.get(task.getId());
+		task.setRank(taskTmp.getRank());
+		task.setDateCreate(taskTmp.getDateCreate());
+		task.setDateLastMod(new Date());
 		return super.updateT(task);
 	}
 

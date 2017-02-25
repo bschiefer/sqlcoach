@@ -47,6 +47,9 @@ public class ScenarioForm extends ActionForm {
 
   /** The datasource. */
   private String datasource;
+  
+  /** The databaseProductName. */
+  private String databaseProductName;
 
   /**
    * Gets the action.
@@ -180,4 +183,12 @@ public class ScenarioForm extends ActionForm {
   public void setStatus(int status) {
     this.status = status;
   }
+
+	public String getDatabaseProductName() {
+		return databaseProductName;
+	}
+
+	public void setDatabaseProductName(String databaseProductName) {
+		this.databaseProductName = databaseProductName;
+	}
 }

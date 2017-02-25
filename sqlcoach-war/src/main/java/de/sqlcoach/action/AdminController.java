@@ -107,11 +107,9 @@ public class AdminController extends HttpServlet {
 			}
 
 			if (param.getView().equals("task")) {
-				Task task = new Task();
 				Taskgroup taskGroup = new Taskgroup();
 				taskGroup.setId(Long.valueOf(param.getTaskgroupId()));
-				task.setTaskgroup(taskGroup);
-				taskCol = dbTaskService.getByTaskgroupId(task);
+				taskCol = dbTaskService.getByTaskgroupId(taskGroup);
 				TrainingController.load_user_statistics(request);
 				request.setAttribute("taskCol", taskCol);
 			}
@@ -133,24 +131,23 @@ public class AdminController extends HttpServlet {
 				}
 
 				// Connection for scenario DataSource
-				final List<MetaTable> metaTableCol = dbConnectionService.readAllTables(scenarioTmp.getDatasource());
-					final String db_prodname = dbConnectionService.getDatabaseProductName(scenarioTmp.getDatasource());
-					session.setAttribute("db_prodname", db_prodname);
-					// update ScenarioTable
-					if (param.getStatus().equals("update") && param.getView().equals("scenariotable")) {
-						final Collection<ScenarioTable> updateCol = dbScenarioTableService
-								.getByScenarioId(scenario.getId());
+				final List<MetaTable> metaTableCol = dbConnectionService.readAllTables(scenarioTmp);
+				final String db_prodname = dbConnectionService.getDatabaseProductName(scenarioTmp);
+				session.setAttribute("db_prodname", db_prodname);
+				// update ScenarioTable
+				if (param.getStatus().equals("update") && param.getView().equals("scenariotable")) {
+					final Collection<ScenarioTable> updateCol = dbScenarioTableService.getByScenarioId(scenario.getId());
 
-						final String[] scenarioTableUpdate = new String[updateCol.size()];
-						int i = 0;
-						for (ScenarioTable updateTable : updateCol) {
-							scenarioTableUpdate[i++] = updateTable.getScenarioTable();
-							System.out.println(scenarioTableUpdate[i - 1]);
-						}
-						request.setAttribute("scenarioTable", scenarioTableUpdate);
+					final String[] scenarioTableUpdate = new String[updateCol.size()];
+					int i = 0;
+					for (ScenarioTable updateTable : updateCol) {
+						scenarioTableUpdate[i++] = updateTable.getScenarioTable();
+						System.out.println(scenarioTableUpdate[i - 1]);
 					}
+					request.setAttribute("scenarioTable", scenarioTableUpdate);
+				}
 
-					request.setAttribute("metaTableCol", metaTableCol);
+				request.setAttribute("metaTableCol", metaTableCol);
 			}
 
 			exerciseConfigAdmin(param, request, response, scenario);
@@ -189,7 +186,7 @@ public class AdminController extends HttpServlet {
 			if (param.getStatus().equals("update") && param.getView().equals("taskgroup")) {
 				Taskgroup taskgroupUpdate = new Taskgroup();
 				for (Taskgroup tmp : taskgroupCol) {
-					if (tmp.getId().equals(param.getTaskgroupId())) {
+					if (tmp.getId().toString().equals(param.getTaskgroupId())) {
 						taskgroupUpdate = tmp;
 					}
 				}
@@ -199,7 +196,7 @@ public class AdminController extends HttpServlet {
 			// delete Taskgroup
 			if (param.getStatus().equals("delete") && param.getView().equals("taskgroup")) {
 				Taskgroup taskgroupDelete = new Taskgroup();
-				taskgroupDelete = dbTaskgroupService.get(param.getTaskgroupId());
+				taskgroupDelete = dbTaskgroupService.get(Long.valueOf(param.getTaskgroupId()));
 				request.setAttribute("taskgroupDelete", taskgroupDelete);
 			}
 
@@ -207,7 +204,7 @@ public class AdminController extends HttpServlet {
 			if (param.getStatus().equals("update") && param.getView().equals("task")) {
 				Task taskUpdate = new Task();
 				for (Task tmp : taskCol) {
-					if (tmp.getId().equals(param.getTaskId())) {
+					if (tmp.getId().toString().equals(param.getTaskId())) {
 						taskUpdate = tmp;
 					}
 				}

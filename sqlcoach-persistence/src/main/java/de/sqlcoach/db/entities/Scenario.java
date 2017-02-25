@@ -52,6 +52,8 @@ public class Scenario implements Serializable {
 	@Column(nullable = false)
 	private java.util.Date dateLastMod;
 
+	private String databaseProductName = null;
+
 	@Transient
 	private String appUserName;
 
@@ -115,11 +117,19 @@ public class Scenario implements Serializable {
 		this.appUserName = appUserName;
 	}
 
+	public String getDatabaseProductName() {
+		return databaseProductName;
+	}
+
+	public void setDatabaseProductName(String databaseProductName) {
+		this.databaseProductName = databaseProductName;
+	}
+
 	@Override
 	public String toString() {
-		return "Scenario [id=" + id + ", appUser=" + appUser + ", description=" + description + ", datasource="
-				+ datasource + ", dateCreate=" + dateCreate + ", dateLastMod=" + dateLastMod + ", appUserName="
-				+ appUserName + "]";
+		return "Scenario [id=" + id + ", appUser=" + appUser + ", description=" + description + ", datasource=" + datasource
+				+ ", dateCreate=" + dateCreate + ", dateLastMod=" + dateLastMod + ", databaseProductName=" + databaseProductName
+				+ ", appUserName=" + appUserName + "]";
 	}
 
 	@Override
@@ -128,6 +138,7 @@ public class Scenario implements Serializable {
 		int result = 1;
 		result = prime * result + ((appUser == null) ? 0 : appUser.hashCode());
 		result = prime * result + ((appUserName == null) ? 0 : appUserName.hashCode());
+		result = prime * result + ((databaseProductName == null) ? 0 : databaseProductName.hashCode());
 		result = prime * result + ((datasource == null) ? 0 : datasource.hashCode());
 		result = prime * result + ((dateCreate == null) ? 0 : dateCreate.hashCode());
 		result = prime * result + ((dateLastMod == null) ? 0 : dateLastMod.hashCode());
@@ -154,6 +165,11 @@ public class Scenario implements Serializable {
 			if (other.appUserName != null)
 				return false;
 		} else if (!appUserName.equals(other.appUserName))
+			return false;
+		if (databaseProductName == null) {
+			if (other.databaseProductName != null)
+				return false;
+		} else if (!databaseProductName.equals(other.databaseProductName))
 			return false;
 		if (datasource == null) {
 			if (other.datasource != null)

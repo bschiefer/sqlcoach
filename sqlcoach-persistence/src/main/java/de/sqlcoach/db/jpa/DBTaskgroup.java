@@ -1,6 +1,7 @@
 package de.sqlcoach.db.jpa;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -23,6 +24,8 @@ public class DBTaskgroup extends DBBase implements DBTaskgroupService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DBTaskgroup.class);
 	private static final String ENTITYNAME = Taskgroup.class.getSimpleName();
+	private static final String SEQUENCENAME_TASKGROUP = "S_TASKGROUP";
+	private static final String SEQUENCENAME_TASKGROUP_RANK = "S_TASKGROUP_RANK";
 
 	private Boolean isUpdated;
 
@@ -35,10 +38,10 @@ public class DBTaskgroup extends DBBase implements DBTaskgroupService {
 	}
 	
 	@Override
-	public Taskgroup get(String id) {
+	public Taskgroup get(Long id) {
 		String strQuery = "SELECT e FROM " + ENTITYNAME + " e WHERE e.id=:id";
 		Query query = getEntityManager().createQuery(strQuery);
-		query.setParameter("id", Long.valueOf(id));
+		query.setParameter("id", id);
 		Taskgroup taskgroup = findByQuerySingleResult(query);
 
 		return taskgroup;
@@ -144,11 +147,18 @@ public class DBTaskgroup extends DBBase implements DBTaskgroupService {
 	
 	@Override
 	public void insert(Taskgroup taskgroup) {
+		taskgroup.setId(generateNextId(SEQUENCENAME_TASKGROUP));
+		taskgroup.setRank(generateNextId(SEQUENCENAME_TASKGROUP_RANK).intValue());
+		taskgroup.setDateCreate(new Date());
+		taskgroup.setDateLastMod(new Date());
 		super.insertT(taskgroup);
 	}
 
 	@Override
 	public Taskgroup update(Taskgroup taskgroup) {
+		Taskgroup taskgroupTmp = this.get(taskgroup.getId());
+		taskgroup.setDateCreate(taskgroupTmp.getDateCreate());
+		taskgroup.setDateLastMod(new Date());
 		return super.updateT(taskgroup);
 	}
 
