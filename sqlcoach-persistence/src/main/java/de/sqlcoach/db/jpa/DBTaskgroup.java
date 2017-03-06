@@ -157,6 +157,7 @@ public class DBTaskgroup extends DBBase implements DBTaskgroupService {
 	@Override
 	public Taskgroup update(Taskgroup taskgroup) {
 		Taskgroup taskgroupTmp = this.get(taskgroup.getId());
+		taskgroup.setRank(taskgroupTmp.getRank());
 		taskgroup.setDateCreate(taskgroupTmp.getDateCreate());
 		taskgroup.setDateLastMod(new Date());
 		return super.updateT(taskgroup);

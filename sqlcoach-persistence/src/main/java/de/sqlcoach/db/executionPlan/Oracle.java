@@ -71,7 +71,7 @@ public class Oracle extends Database {
 				LOG.info("More than one result from: select table_name from user_tables where table_name = \'" + PLAN_TABLE_NAME + "\'");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("SQLException: " + e);
 		}
 
 		return viewResultSet;
@@ -84,8 +84,7 @@ public class Oracle extends Database {
 		try {
 			viewResultSet = DBViewResultSet.get(cn, query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("SQLException: " + e);
 		}
 
 		return viewResultSet;

@@ -17,6 +17,7 @@ import de.sqlcoach.util.ViewResultSet;
  */
 public interface DBConnectionService {
 	public static final String BEANNAME = "DBConnectionBean";
+	public void testConnection(Scenario scenario);
 	public List<Object[]> executeQuery(String sqlString, Scenario scenario);
 	public ViewResultSet get(String query, Scenario scenario) throws SQLException;
 	public ViewResultSet getExplainPlan(String query, Scenario scenario);

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8080/sqlcoach-war/" />
+<title>Admin_Neues_Szenario_korrekte_Datasource</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Admin_Neues_Szenario_korrekte_Datasource</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://127.0.0.1:8080/sqlcoach-war/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=username</td>
+	<td>superadmin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=password</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Neues Szenario</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=input[name=&quot;description&quot;]</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=datasource</td>
+	<td>java:/ScenarioDS</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=databaseProductName</td>
+	<td>label=Sap DB</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=scenarioTable</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>document.ScenarioTableForm.scenarioTable[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//img[@alt='Bearbeiten'])[last()]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=input[name=&quot;description&quot;]</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>name=datasource</td>
+	<td>java:/ScenarioDS</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>name=databaseProductName</td>
+	<td>Sap DB</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

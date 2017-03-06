@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,6 +35,7 @@ import de.sqlcoach.util.LoginCheck;
  * @author <a href="http://www.christophgerstle.de">Christoph Gerstle</a>
  */
 public class UserAction extends Action {
+	private static final Logger log = Logger.getLogger(UserAction.class);
 
 	/*
 	 * (non-Javadoc)
@@ -78,16 +80,22 @@ public class UserAction extends Action {
 		DBAppUserService dbAppUserService = DBRemoteEJBClient.getEJB(DBAppUserService.class.getName(),
 				DBAppUserService.BEANNAME);
 
-		if (userForm.getAction().equals("update")) {
-			appUserModel.setId(Long.valueOf(userForm.getAppUserId()));
-			dbAppUserService.update(appUserModel);
-		} else if (userForm.getAction().equals("add")) { // add new user
-			appUserModel.setPassword(DBUtil.encrypt(userForm.getPassword()));
-			dbAppUserService.insert(appUserModel);
-		} else if (userForm.getAction().equals("delete")) { // delete user
-			appUserModel.setId(Long.valueOf(userForm.getAppUserId()));
-			dbAppUserService.delete(appUserModel);
+		try {
+			if (userForm.getAction().equals("update")) {
+				appUserModel.setId(Long.valueOf(userForm.getAppUserId()));
+				dbAppUserService.update(appUserModel);
+			} else if (userForm.getAction().equals("add")) { // add new user
+				appUserModel.setPassword(DBUtil.encrypt(userForm.getPassword()));
+				dbAppUserService.insert(appUserModel);
+			} else if (userForm.getAction().equals("delete")) { // delete user
+				appUserModel.setId(Long.valueOf(userForm.getAppUserId()));
+				dbAppUserService.delete(appUserModel);
+			}
+		} catch (Exception e) {
+			Alert.catchError("alert.error.user", request);
+			log.error("execute: " + e);
 		}
+		
 
 		return mapping.findForward("forward");
 	}

@@ -18,7 +18,7 @@ public class TaskgroupTest {
 		
 		if(null != lookUpTaskgroupJPA() && null != lookUpTaskgroupJDBC()) {
 			String id = "";
-			taskgroupJPA = lookUpTaskgroupJPA().get(id);
+			taskgroupJPA = lookUpTaskgroupJPA().get(Long.valueOf(id));
 			taskgroupJDBC = lookUpTaskgroupJDBC().get(id);
 			taskgroupJDBC.toString().equals(taskgroupJPA.toString());
 			

@@ -165,6 +165,7 @@ public class AdminController extends HttpServlet {
 			}
 
 			// update Scenario
+			scenarioCol = dbScenarioService.getAll();
 			if (param.getStatus().equals("update") && param.getView().equals("scenario")) {
 				Scenario scenarioUpdate = new Scenario();
 				for (Scenario tmp : scenarioCol) {
@@ -172,6 +173,8 @@ public class AdminController extends HttpServlet {
 						scenarioUpdate = tmp;
 					}
 				}
+				
+				request.setAttribute("scenarioCol", scenarioCol);
 				request.setAttribute("scenarioUpdate", scenarioUpdate);
 			}
 
@@ -179,6 +182,7 @@ public class AdminController extends HttpServlet {
 			if (param.getStatus().equals("delete") && param.getView().equals("scenario")) {
 				Scenario scenarioDelete = new Scenario();
 				scenarioDelete = dbScenarioService.get(scenario.getId());
+				request.setAttribute("scenarioCol", scenarioCol);
 				request.setAttribute("scenarioDelete", scenarioDelete);
 			}
 
@@ -257,11 +261,11 @@ public class AdminController extends HttpServlet {
 		try {
 			exerciseConfigAdminAndExercise(session, param, request, response, scenario);
 		} catch (NamingException e) {
-			e.printStackTrace();
+			log.error("NamingException: " + e);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("SQLException: " + e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Exception: " + e);
 		}
 
 		if (log.isInfoEnabled()) {

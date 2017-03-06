@@ -52,7 +52,6 @@ import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.db.entities.ScenarioTable;
 import de.sqlcoach.db.entities.Task;
 import de.sqlcoach.db.entities.Taskgroup;
-import de.sqlcoach.db.jpa.DBAppStatistic;
 import de.sqlcoach.util.MetaTable;
 import de.sqlcoach.util.ParamUtil;
 import de.sqlcoach.util.ViewResultSet;
@@ -70,7 +69,7 @@ public class TrainingController extends HttpServlet {
 
 	/** The log. */
 	private static final Logger log = Logger.getLogger(TrainingController.class);
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(DBAppStatistic.class);
+	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(TrainingController.class);
 
 	@EJB
 	private DBAppUserService dbAppUserService;
@@ -89,7 +88,7 @@ public class TrainingController extends HttpServlet {
 
 	@EJB
 	private DBTaskgroupService dbTaskgroupService;
-	
+
 	@EJB
 	private DBConnectionService dbConnectionService;
 
@@ -144,11 +143,12 @@ public class TrainingController extends HttpServlet {
 		request.setAttribute("task", task);
 
 		// Taskgroup
-		if(null != task) {
+		if (null != task) {
 			tf.setTaskgroupId(task.getTaskgroup().getId().toString());
 		}
 
-		Taskgroup taskgroup = ParamUtil.isNull(tf.getTaskgroupId()) ? null : dbTaskgroupService.get(Long.valueOf(tf.getTaskgroupId()));
+		Taskgroup taskgroup = ParamUtil.isNull(tf.getTaskgroupId()) ? null
+				: dbTaskgroupService.get(Long.valueOf(tf.getTaskgroupId()));
 
 		request.setAttribute("taskgroup", taskgroup);
 
@@ -175,21 +175,25 @@ public class TrainingController extends HttpServlet {
 		}
 
 		ViewResultSet viewResultSet = null;
-			if (metaTableCol == null) { // Metainfo in Session puffern (bs)
-				metaTableCol = dbConnectionService.readByScenarioTableCol(scenarioTableCol, scenario);
-				request.getSession().setAttribute("metaTableCol", metaTableCol);
-				final String db_prodname = dbConnectionService.getDatabaseProductName(scenario);
-				final String db_prodversion = dbConnectionService.getDatabaseProductVersion(scenario);
-				request.getSession().setAttribute("db_prodname", db_prodname);
-				request.getSession().setAttribute("db_prodversion", db_prodversion);
-			}
+		if (metaTableCol == null) { // Metainfo in Session puffern (bs)
+			metaTableCol = dbConnectionService.readByScenarioTableCol(scenarioTableCol, scenario);
+			request.getSession().setAttribute("metaTableCol", metaTableCol);
+			final String db_prodname = dbConnectionService.getDatabaseProductName(scenario);
+			final String db_prodversion = dbConnectionService.getDatabaseProductVersion(scenario);
+			request.getSession().setAttribute("db_prodname", db_prodname);
+			request.getSession().setAttribute("db_prodversion", db_prodversion);
+		}
 
-			// Sample Solution as ViewResultSet (based on admin query)
+		// Sample Solution as ViewResultSet (based on admin query)
+		if (null != task) { //if free training choosen then task == null
 			try {
+				log.info("task.getQuery(): " + task.getQuery());
 				viewResultSet = (task != null) ? dbConnectionService.get(task.getQuery(), scenario) : null;
+				request.getSession().setAttribute("sampleSolutionHint", task.getQuery());
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.error("viewResultSet: " + e);
 			}
+		}
 
 		int resultCnt = (viewResultSet != null && viewResultSet.getRows() != null) ? viewResultSet.getRows().size() : 0;
 		request.setAttribute("solutionViewResultSet", viewResultSet);

@@ -118,7 +118,7 @@
       <custom:tdForm area="left"><fmt:message key="exercise.form.query" /></custom:tdForm>
       <custom:tdForm area="right"><%@ include file="include/sqlform.jsp" %></custom:tdForm>
     </tr>
-    <c:set var="no" value="${user_trials[task.id]}" />
+    <c:set var="no" value="${user_trials[task.idToString]}" />
     <c:if test="${no > task.hint_trials && not empty task.hint && currentAlert.message=='alert.error.notEqual'}" >
     <tr><!-- solution hint -->
       <custom:tdForm area="left">&nbsp;</custom:tdForm>
@@ -136,20 +136,33 @@
   </custom:tableForm>  
 </html:form>  
 
+<!-- SAMPLE SOLUTION HINT AFTER 3 TRIALS -->
+<c:if test="${2 < user_trials[task.idToString]}" >
+<%-- MPA: ${user_trials}
+sampleSolution: ${user_trials[task.idToString]} --%> 
+<button id="sampleSolutionHintBtn" onclick="sampleSolutionHintFunction()"><fmt:message key="training.sampleSolutionHint"/></button>
+<div id="sampleSolutionHint" style="display: none;">
+<c:out value="${sampleSolutionHint}" />
+</div>
+</c:if>
+
+<br />
+<br />
+
 <!-- EXPLAIN PLAN -->
-<button id="explainBtn" onclick="myFunction()">Ausf&uumlhrungsplan</button>
+<c:if test="${TrainingForm.status == 'check'}">
+<button id="explainBtn" onclick="explainFunction()"><fmt:message key="training.explainPlan"/></button>
 <div id="explain" style="display: none;">
 <c:set var="explainViewResultSet" scope="request" value="explainResultSet"/>
 
-<c:if test="${TrainingForm.status == 'check'}">
 <div class="tableHeader1">
-  <fmt:message key="training.traineeSolution"/> &mdash; <fmt:message key="training.records"/> : ${explainResultSetCount}
+  <fmt:message key="training.explainPlan"/> &mdash; <fmt:message key="training.records"/> : ${explainResultSetCount}
 </div>
 <c:set var="nameResultSet" scope="request" value="explainResultSet"/>
 <%@ include file="include/viewResultSet.jsp"%>
 <br>
-</c:if>
 </div>
+</c:if>
 
 <!-- TRAINEE SOLUTION -->
 <c:set var="inputViewResultSet" scope="request" value="traineeViewResultSet"/>
@@ -175,8 +188,13 @@
 <%@ include file="include/footer.jsp"%>
 
 <script>
-function myFunction() {
-    var yourUl = document.getElementById("explain");
-    yourUl.style.display = yourUl.style.display === 'none' ? '' : 'none';
+function explainFunction() {
+    var getExplainButton = document.getElementById("explain");
+    getExplainButton.style.display = getExplainButton.style.display === 'none' ? '' : 'none';
+}
+
+function sampleSolutionHintFunction() {
+	var getSampleSolutionHintButton = document.getElementById("sampleSolutionHint");
+	getSampleSolutionHintButton.style.display = getSampleSolutionHintButton.style.display === 'none' ? '' : 'none';
 }
 </script>

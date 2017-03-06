@@ -54,7 +54,7 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		try (Connection connection = getConnection(entityManager)) {
 			databaseProductName = getDatabaseProductName(connection);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("getDatabaseProductName: " + e);
 		}
 
 		return databaseProductName;
@@ -74,7 +74,7 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		try (Connection connection = getConnection(entityManager)) {
 			databaseProductVersion = connection.getMetaData().getDatabaseProductVersion();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("getDatabaseProductVersion: " + e);
 		}
 
 		return databaseProductVersion;
@@ -95,7 +95,7 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		try (Connection connection = getConnection(entityManager)) {
 			viewResultSet = DBViewResultSet.get(connection, query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("get: " + e);
 		}
 
 		return viewResultSet;
@@ -118,7 +118,7 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 			String dataBaseProductName = getDatabaseProductName(connection);
 			viewResultSet = facade.explain(connection, query, dataBaseProductName);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("getExplainPlan: " + e);
 		}
 
 		return viewResultSet;
@@ -179,7 +179,7 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		try (Connection connection = getConnection(entityManager)) {
 			metaTableCol = readAllTables(connection);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("readAllTables: " + e);
 		}
 
 		return metaTableCol;
@@ -226,7 +226,7 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		try (Connection connection = getConnection(entityManager)) {
 			metaTableCol = readByScenarioTableCol(scenarioTableCol, connection);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error("readByScenarioTableCol: " + e);
 		}
 
 		return metaTableCol;
@@ -348,5 +348,12 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		metaTableColumnCol = getMetaTableColumns(connection, table, pk_map, fk_tab_map, fk_col_map);
 
 		return metaTableColumnCol;
+	}
+
+	/**
+	 * do nothing, @see DBConnectionBean(module: sqlcoach-ejb)
+	 */
+	@Override
+	public void testConnection(Scenario scenario) {
 	}
 }

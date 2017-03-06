@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionMapping;
 
 import de.sqlcoach.bean.ExerciseForm;
 import de.sqlcoach.bean.ScenarioTableForm;
+import de.sqlcoach.beans.DBScenarioService;
 import de.sqlcoach.beans.DBScenarioTableService;
 import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.db.entities.ScenarioTable;
@@ -92,6 +93,11 @@ public class ScenarioTableAction extends Action {
 				dbScenarioTableService.insert(scenarioTable);
 			}
 		}
+		
+		//update scenarioCol
+		DBScenarioService dbScenarioService = DBRemoteEJBClient.getEJB(DBScenarioService.class.getName(),
+				DBScenarioService.BEANNAME);	
+		request.setAttribute("scenarioCol", dbScenarioService.getAll());
 
 		return mapping.findForward("forward");
 	}

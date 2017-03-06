@@ -16,6 +16,7 @@ package de.sqlcoach.bean;
 import java.text.ParseException;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 
 import de.sqlcoach.util.TextUtil;
@@ -31,6 +32,9 @@ public class StatisticForm extends ActionForm {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 9121027826628748483L;
 
+	/** The log. */
+	private static final Logger log = Logger.getLogger(StatisticForm.class);
+	
 	/** The scenario id. */
 	private String scenarioId;
 
@@ -64,7 +68,7 @@ public class StatisticForm extends ActionForm {
 		try {
 			this.dateFrom = TextUtil.stringToDate(dateFrom);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			log.error("ParseException: " + e);
 		}
 	}
 
@@ -87,7 +91,7 @@ public class StatisticForm extends ActionForm {
 		try {
 			this.dateTill = TextUtil.stringToDate(dateTill);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			log.error("ParseException: " + e);
 		}
 	}
 

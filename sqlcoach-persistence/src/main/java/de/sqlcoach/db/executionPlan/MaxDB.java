@@ -41,8 +41,7 @@ public class MaxDB extends Database{
 		try {
 			viewResultSet = DBViewResultSet.get(cn, query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("SQLException: " + e);
 		}
 		
 		return viewResultSet;

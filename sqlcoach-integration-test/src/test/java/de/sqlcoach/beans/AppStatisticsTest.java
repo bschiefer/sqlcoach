@@ -13,6 +13,7 @@ import de.sqlcoach.model.AppStatistic;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 import de.sqlcoach.remoteEJB.ModulName;
 
+//http://webdev.jhuep.com/~jcs/ejava-javaee/coursedocs/content/html/jpa-entitymgrex-testcase.html
 public class AppStatisticsTest {
 	
 	private DBAppStatisticService appStatisticsJPA = null;
@@ -34,14 +35,15 @@ public class AppStatisticsTest {
 
 	@Test
 	public void testGet() {
-		AppStatistics appStatisticsJPA = getJPA().get(1L);
-		AppStatistic appStatisticJDBC = getJDBC().get(1);
+		List<AppStatistics> appStatisticsJPA = getJPA().selectAll();
+		AppStatistics appStatisticJPA = getJPA().get(appStatisticsJPA.get(0).getId());
+		AppStatistic appStatisticJDBC = getJDBC().get(appStatisticsJPA.get(0).getId().intValue());
 		
-		assertEquals(appStatisticsJPA.getId(), Long.valueOf(appStatisticJDBC.getId()));
-		assertEquals(appStatisticsJPA.getQuery(), appStatisticJDBC.getQuery());
-		assertEquals(appStatisticsJPA.getSessionID(), appStatisticJDBC.getSessionId());
-		assertEquals(appStatisticsJPA.getTask().getId(), Long.valueOf(appStatisticJDBC.getTaskId()));
-		assertEquals(appStatisticsJPA.getDateCreate(), appStatisticJDBC.getDatecreate());
+		assertEquals(appStatisticJPA.getId(), Long.valueOf(appStatisticJDBC.getId()));
+		assertEquals(appStatisticJPA.getQuery(), appStatisticJDBC.getQuery());
+		assertEquals(appStatisticJPA.getSessionID(), appStatisticJDBC.getSessionId());
+		assertEquals(appStatisticJPA.getTask().getId(), Long.valueOf(appStatisticJDBC.getTaskId()));
+		assertEquals(appStatisticJPA.getDateCreate(), appStatisticJDBC.getDatecreate());
 	}
 	
 	@Test

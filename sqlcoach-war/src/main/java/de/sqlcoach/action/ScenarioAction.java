@@ -22,8 +22,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import de.sqlcoach.bean.Alert;
 import de.sqlcoach.bean.ExerciseForm;
 import de.sqlcoach.bean.ScenarioForm;
+import de.sqlcoach.beans.DBConnectionService;
 import de.sqlcoach.beans.DBScenarioService;
 import de.sqlcoach.db.entities.AppUser;
 import de.sqlcoach.db.entities.Scenario;
@@ -84,33 +86,47 @@ ScenarioAction extends Action {
 				scenario.setDatasource(scenarioForm.getDatasource());
 				scenario.setDatabaseProductName(scenarioForm.getDatabaseProductName());
 
-				// add
-				if (scenarioForm.getAction().equals("add")) {
-					dbScenarioService.insert(scenario);
+				try {
+					// test given scenario data from admin interface to connect database
+					DBConnectionService dbConnectionService = DBRemoteEJBClient.getEJB(DBConnectionService.class.getName(),
+							DBConnectionService.BEANNAME);
+					dbConnectionService.testConnection(scenario);
+
+					// add
+					if (scenarioForm.getAction().equals("add")) {
+						dbScenarioService.insert(scenario);
+					}
+
+					// update
+					if (scenarioForm.getAction().equals("update")) {
+						scenario.setId(Long.valueOf(scenarioForm.getId()));
+						dbScenarioService.update(scenario);
+					}
+
+					// request for 2nd page scenariotables
+					request.setAttribute("view", "scenariotable");
+					request.setAttribute("status", scenarioForm.getStatus());
+
+					// if add we have no ScenarioId, because it is just created
+					// - so we have to find it by the unique description
+					if (scenarioForm.getAction().equals("add")) {
+						scenarioForm
+								.setScenarioId(dbScenarioService.getByDescription(scenarioForm.getDescription()).getId().toString());
+					}
+					request.setAttribute("scenario_id", scenarioForm.getScenarioId());
+				} catch (Exception e) {
+					Alert.catchError("alert.error.datasource", request);
+					log.error("execute: " + e);
 				}
 
-				// update
-				if (scenarioForm.getAction().equals("update")) {
-					scenario.setId(Long.valueOf(scenarioForm.getId()));
-					dbScenarioService.update(scenario);
-				}
-
-				// request for 2nd page scenariotables
-				request.setAttribute("view", "scenariotable");
-				request.setAttribute("status", scenarioForm.getStatus());
-
-				// if add we have no ScenarioId, because it is just created
-				// - so we have to find it by the unique description
-				if (scenarioForm.getAction().equals("add")) {
-					scenarioForm
-							.setScenarioId(dbScenarioService.getByDescription(scenarioForm.getDescription()).getId().toString());
-				}
-				request.setAttribute("scenario_id", scenarioForm.getScenarioId());
 			}
 		} else if (scenarioForm.getAction().equals("delete")) {
 			scenario.setId(Long.valueOf(scenarioForm.getId()));
 			dbScenarioService.delete(scenario);
 		}
+
+		// update scenarioCol
+		request.setAttribute("scenarioCol", dbScenarioService.getAll());
 
 		return mapping.findForward("forward");
 	}

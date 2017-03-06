@@ -105,6 +105,11 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 
 		return entityManagerFactories.get(jndiName).createEntityManager();
 	}
+	
+	@Override
+	public void testConnection(Scenario scenario) {
+		createConnection(scenario);
+	}
 
 	/**
 	 * get connection for selected scenario database and execute query as native query 
