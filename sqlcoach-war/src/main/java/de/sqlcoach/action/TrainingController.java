@@ -70,6 +70,8 @@ public class TrainingController extends HttpServlet {
 	/** The log. */
 	private static final Logger log = Logger.getLogger(TrainingController.class);
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(TrainingController.class);
+	
+	private static final Integer DEFAULT_SAMPLE_SOLUTION_HINT_COUNT = 3;
 
 	@EJB
 	private DBAppUserService dbAppUserService;
@@ -137,7 +139,16 @@ public class TrainingController extends HttpServlet {
 
 		Scenario scenario = dbScenarioService.get(Long.valueOf(scenarioId));
 		request.setAttribute("scenario", scenario);
-
+		
+		//check value sample solution hint count is set, else get default value
+		Integer sampleSolutionHintCount = null;
+		if(null != scenario.getSampleSolutionHintCount()) {
+			sampleSolutionHintCount = scenario.getSampleSolutionHintCount();
+		} else {
+			sampleSolutionHintCount = DEFAULT_SAMPLE_SOLUTION_HINT_COUNT;
+		}
+		request.setAttribute("sampleSolutionHintCount", sampleSolutionHintCount);
+		
 		// Task
 		Task task = ParamUtil.isNull(tf.getTaskId()) ? null : dbTaskService.get(Long.valueOf(tf.getTaskId()));
 		request.setAttribute("task", task);

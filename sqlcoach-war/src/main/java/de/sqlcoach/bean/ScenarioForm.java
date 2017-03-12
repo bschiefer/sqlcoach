@@ -50,8 +50,11 @@ public class ScenarioForm extends ActionForm {
   
   /** The databaseProductName. */
   private String databaseProductName;
+  
+  /** The databaseProductName. */
+  private Integer sampleSolutionHintCount;
 
-  /**
+	/**
    * Gets the action.
    * 
    * @return the action
@@ -190,5 +193,13 @@ public class ScenarioForm extends ActionForm {
 
 	public void setDatabaseProductName(String databaseProductName) {
 		this.databaseProductName = databaseProductName;
+	}
+	
+	public Integer getSampleSolutionHintCount() {
+		return sampleSolutionHintCount;
+	}
+
+	public void setSampleSolutionHintCount(Integer sampleSolutionHintCount) {
+		this.sampleSolutionHintCount = sampleSolutionHintCount;
 	}
 }

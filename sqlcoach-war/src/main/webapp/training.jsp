@@ -136,12 +136,11 @@
   </custom:tableForm>  
 </html:form>  
 
-<!-- SAMPLE SOLUTION HINT AFTER 3 TRIALS -->
-<c:if test="${2 < user_trials[task.idToString]}" >
-<%-- MPA: ${user_trials}
-sampleSolution: ${user_trials[task.idToString]} --%> 
+<!-- SAMPLE SOLUTION HINT-->
+<c:if test="${sampleSolutionHintCount <= user_trials[task.idToString]}" >
 <button id="sampleSolutionHintBtn" onclick="sampleSolutionHintFunction()"><fmt:message key="training.sampleSolutionHint"/></button>
 <div id="sampleSolutionHint" style="display: none;">
+<br />
 <c:out value="${sampleSolutionHint}" />
 </div>
 </c:if>

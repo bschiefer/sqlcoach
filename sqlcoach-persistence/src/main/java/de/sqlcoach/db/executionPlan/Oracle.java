@@ -12,7 +12,7 @@ import de.sqlcoach.util.DBViewResultSet;
 import de.sqlcoach.util.ViewResultSet;
 
 /**
- * Oracle class create explain and execute statement for database Oracle  
+ * Oracle class create explain and execute statement for database Oracle
  * 
  * @author Michael Paulus
  * @version 1.0
@@ -39,15 +39,15 @@ public class Oracle extends Database {
 
 	private Integer checkPlanTableExists(Connection connection) throws SQLException {
 		String statement = "select count(table_name) from user_tables where table_name = \'" + PLAN_TABLE_NAME + "\'";
-		//TODO resultset must close?
+		// TODO resultset must close?
 		ResultSet result = connection.createStatement().executeQuery(statement);
 		Integer countResults = -1;
-		
-		while(result.next()) {
+
+		while (result.next()) {
 			countResults = result.getInt(1);
 			break;
 		}
-		
+
 		LOG.info("MPA result count Plantables: " + countResults);
 		return countResults;
 	}
@@ -55,20 +55,23 @@ public class Oracle extends Database {
 	@Override
 	public ViewResultSet explain(String query, Connection connection) {
 		ViewResultSet viewResultSet = null;
-		
+
 		try {
 			if (1 == checkPlanTableExists(connection)) {
 				Statement statement = connection.createStatement();
 				statement.execute("explain plan for " + query);
-				
-				String planTable = "select * from " + PLAN_TABLE_NAME;
+
+				String planTable = "select OPERATION, OPTIONS, OBJECT_NAME, OBJECT_INSTANCE, OBJECT_TYPE, OPTIMIZER, COST, CARDINALITY, BYTES, CPU_COST, IO_COST, ACCESS_PREDICATES, TIME from "
+						+ PLAN_TABLE_NAME 
+						+	" where PLAN_ID = (select max(PLAN_ID) from " + PLAN_TABLE_NAME + ")"; //last inserted row from plan table
 				viewResultSet = execute(planTable, connection);
 			} else if (0 == checkPlanTableExists(connection)) {
-				//TODO create @$ORACLE_HOME/rdbms/admin/catplan.sql
+				// TODO create @$ORACLE_HOME/rdbms/admin/catplan.sql
 				LOG.info("create @$ORACLE_HOME/rdbms/admin/catplan.sql");
 			} else {
-				//TODO More than one result from: 
-				LOG.info("More than one result from: select table_name from user_tables where table_name = \'" + PLAN_TABLE_NAME + "\'");
+				// TODO More than one result from:
+				LOG.info("More than one result from: select table_name from user_tables where table_name = \'" + PLAN_TABLE_NAME
+						+ "\'");
 			}
 		} catch (SQLException e) {
 			LOG.error("SQLException: " + e);

@@ -84,7 +84,12 @@
         </custom:tdForm>
       </tr>
       <tr>
-        <custom:tdForm area="left">Datenbanktyp</custom:tdForm>
+        <custom:tdForm area="left"><fmt:message key="exercise.form.sampleSolutionHintCount" /></custom:tdForm>
+        <custom:tdForm area="right"><html:text property="sampleSolutionHintCount" maxlength="24" value="${scenarioUpdate.sampleSolutionHintCount}"/>
+        </custom:tdForm>
+      </tr>
+      <tr>
+        <custom:tdForm area="left"><fmt:message key="exercise.form.databaseProductName" /></custom:tdForm>
         <custom:tdForm area="right">
         	<html:select property="databaseProductName" value="${scenarioUpdate.databaseProductName}">
                 <html:option value="">Wähle Datenbanktyp</html:option>

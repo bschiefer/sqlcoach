@@ -65,8 +65,10 @@ public class TrainingAction extends Action {
 		if (scenario == null || scenario.getId() == null || !scenario.getId().equals(scenarioId)) {
 			DBScenarioService dbScenarioService = DBRemoteEJBClient.getEJB(DBScenarioService.class.getName(),
 					DBScenarioService.BEANNAME);
-			scenario = dbScenarioService.get(Long.valueOf(scenarioId));
-			request.getSession().setAttribute("scenario", scenario);
+			if(null != scenarioId) {
+				scenario = dbScenarioService.get(Long.valueOf(scenarioId));
+				request.getSession().setAttribute("scenario", scenario);
+			}
 		}
 
 		// establish connection with own Datasource

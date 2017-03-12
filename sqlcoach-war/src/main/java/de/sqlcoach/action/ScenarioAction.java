@@ -84,6 +84,7 @@ ScenarioAction extends Action {
 				scenario.setAppUser(appUser);
 				scenario.setDescription(scenarioForm.getDescription());
 				scenario.setDatasource(scenarioForm.getDatasource());
+				scenario.setSampleSolutionHintCount(scenarioForm.getSampleSolutionHintCount());
 				scenario.setDatabaseProductName(scenarioForm.getDatabaseProductName());
 
 				try {

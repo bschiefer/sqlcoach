@@ -54,6 +54,8 @@ public class Scenario implements Serializable {
 
 	private String databaseProductName = null;
 
+	private Integer sampleSolutionHintCount = null;
+
 	@Transient
 	private String appUserName;
 
@@ -109,6 +111,22 @@ public class Scenario implements Serializable {
 		this.dateLastMod = dateLastMod;
 	}
 
+	public String getDatabaseProductName() {
+		return databaseProductName;
+	}
+
+	public void setDatabaseProductName(String databaseProductName) {
+		this.databaseProductName = databaseProductName;
+	}
+	
+	public Integer getSampleSolutionHintCount() {
+		return sampleSolutionHintCount;
+	}
+
+	public void setSampleSolutionHintCount(Integer sampleSolutionHintCount) {
+		this.sampleSolutionHintCount = sampleSolutionHintCount;
+	}
+
 	public String getAppUserName() {
 		return appUserName;
 	}
@@ -117,19 +135,11 @@ public class Scenario implements Serializable {
 		this.appUserName = appUserName;
 	}
 
-	public String getDatabaseProductName() {
-		return databaseProductName;
-	}
-
-	public void setDatabaseProductName(String databaseProductName) {
-		this.databaseProductName = databaseProductName;
-	}
-
 	@Override
 	public String toString() {
 		return "Scenario [id=" + id + ", appUser=" + appUser + ", description=" + description + ", datasource=" + datasource
 				+ ", dateCreate=" + dateCreate + ", dateLastMod=" + dateLastMod + ", databaseProductName=" + databaseProductName
-				+ ", appUserName=" + appUserName + "]";
+				+ ", sampleSolutionHintCount=" + sampleSolutionHintCount + ", appUserName=" + appUserName + "]";
 	}
 
 	@Override
@@ -144,6 +154,7 @@ public class Scenario implements Serializable {
 		result = prime * result + ((dateLastMod == null) ? 0 : dateLastMod.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((sampleSolutionHintCount == null) ? 0 : sampleSolutionHintCount.hashCode());
 		return result;
 	}
 
@@ -195,6 +206,11 @@ public class Scenario implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (sampleSolutionHintCount == null) {
+			if (other.sampleSolutionHintCount != null)
+				return false;
+		} else if (!sampleSolutionHintCount.equals(other.sampleSolutionHintCount))
 			return false;
 		return true;
 	}
