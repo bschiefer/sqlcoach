@@ -1,9 +1,14 @@
 package de.sqlcoach.beans;
 
+import java.sql.Connection;
+
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.hibernate.Session;
+import org.hibernate.internal.SessionImpl;
 
 import de.sqlcoach.beans.DBAppUserService;
 import de.sqlcoach.db.jpa.DBAppUser;
@@ -23,5 +28,19 @@ public class AppUserBean extends DBAppUser implements DBAppUserService {
 
 	public EntityManager getEntityManager() {
 		return this.entityManager;
+	}
+	
+	/**
+	 * Get Connection from selected scenario EntityManager 
+	 * 
+	 * @param entityManager
+	 * @return Connection
+	 */
+	public Connection getConnection(EntityManager entityManager) {
+		Session hibernateSession = entityManager.unwrap(Session.class);
+		SessionImpl sessionImpl = (SessionImpl) hibernateSession;
+		Connection connection = sessionImpl.connection();
+
+		return connection;
 	}
 }

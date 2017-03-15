@@ -44,7 +44,7 @@ public class DBConnection implements AutoCloseable {
 	/** The PROPERTIE s_ FILE. */
 	// private static final String PROPERTIES_FILE =
 	// "src/de/fhkl/sqlcoach/properties/db.properties";
-//	private static final String PROPERTIES_FILE = "db.properties";
+	// private static final String PROPERTIES_FILE = "db.properties";
 
 	/** The SQLCOAC h_ DBA. */
 	public static final String SQLCOACH_DBA = "SQLCOACH_DBADS";
@@ -104,8 +104,8 @@ public class DBConnection implements AutoCloseable {
 	 *           the SQL exception
 	 */
 	protected static DBConnection getPoolConnection(String dataSourceName) throws NamingException, SQLException {
-//		final Context initCtx = new InitialContext();
-//		final Context envCtx = (Context) initCtx.lookup("java:comp/env");
+		// final Context initCtx = new InitialContext();
+		// final Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
 		final String name = "jdbc/" + dataSourceName;
 
@@ -176,9 +176,12 @@ public class DBConnection implements AutoCloseable {
 
 		log.info("getSimpleConnection ENTER ");
 		String driver = "com.sap.dbtech.jdbc.DriverSapDB";
-		String url = "jdbc:sapdb://localhost/SQLCOACH";
-		String user = "SQLCOACH_DBA";
-		String password = "sqlcoach";
+		// String url = "jdbc:sapdb://localhost/SQLCOACH";
+		// String user = "SQLCOACH_DBA";
+		// String password = "sqlcoach";
+		String url = "jdbc:sapdb://localhost/TEST";
+		String user = "Test";
+		String password = "test";
 
 		Connection cn = null;
 		// final Properties props = new Properties();
@@ -211,8 +214,8 @@ public class DBConnection implements AutoCloseable {
 		} catch (Exception e) {
 			log.error("getSimpleConnection : problems while establishing the connection:\n", e);
 		}
-//		int connectionCnt = connectionCounter.get(dataSourceName);
-//		connectionCounter.put(dataSourceName, connectionCnt++);
+		// int connectionCnt = connectionCounter.get(dataSourceName);
+		// connectionCounter.put(dataSourceName, connectionCnt++);
 		return cn;
 	}
 

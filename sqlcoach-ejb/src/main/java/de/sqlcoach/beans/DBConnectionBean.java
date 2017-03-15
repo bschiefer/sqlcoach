@@ -34,15 +34,15 @@ import de.sqlcoach.db.jpa.DBMetaData;
 @Remote(DBConnectionService.class)
 @TransactionManagement(TransactionManagementType.BEAN)
 public class DBConnectionBean extends DBMetaData implements DBConnectionService {
-
+	
 	private static final Logger LOG = LoggerFactory.getLogger(DBConnectionBean.class);
 	private static final String PERSISTENCE_UNIT_NAME = "scenariodb";
-
+	
 	private static Map<String, EntityManagerFactory> entityManagerFactories = new HashMap<>();
 	
 	/**
-	 * Deliver connectionProperties to create EntityManagerFactory for scenario database
-	 * (see scenario table)
+	 * Deliver connectionProperties to create EntityManagerFactory for scenario
+	 * database (see scenario table)
 	 * 
 	 * @param jndiName
 	 * @return Map<String, String>
@@ -53,22 +53,26 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 		connectionProperties.put("javax.persistence.jtaDataSource", scenario.getDatasource());
 		
 		String hibernateDialect;
-		switch (scenario.getDatabaseProductName().toUpperCase()) {
-		case "SAPDB":
-			hibernateDialect = "org.hibernate.dialect.SAPDBDialect";
-			break;
-		case "ORACLE":
-			hibernateDialect = "org.hibernate.dialect.Oracle10gDialect";
-			break;
-		case "MYSQL":
-			hibernateDialect = "org.hibernate.dialect.MySQLDialect";
-			break;
-		case "POSTGRESQL":
+		if (null != scenario.getDatabaseProductName()) {
+			switch (scenario.getDatabaseProductName().toUpperCase()) {
+				case "SAP DB":
+					hibernateDialect = "org.hibernate.dialect.SAPDBDialect";
+					break;
+				case "ORACLE":
+					hibernateDialect = "org.hibernate.dialect.Oracle10gDialect";
+					break;
+				case "MYSQL":
+					hibernateDialect = "org.hibernate.dialect.MySQLDialect";
+					break;
+				case "POSTGRESQL":
+					hibernateDialect = "org.hibernate.dialect.PostgreSQLDialect";
+					break;
+				default:
+					hibernateDialect = "org.hibernate.dialect.SAPDBDialect";
+					break;
+			}
+		} else {
 			hibernateDialect = "org.hibernate.dialect.PostgreSQLDialect";
-			break;
-		default:
-			hibernateDialect = "org.hibernate.dialect.SAPDBDialect";
-			break;
 		}
 		
 		LOG.info("hibernateDialect: {}", hibernateDialect);
@@ -80,7 +84,7 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 		
 		return connectionProperties;
 	}
-
+	
 	/**
 	 * create EntityManagerFactory for scenario database
 	 * 
@@ -92,17 +96,16 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 		Map<String, String> connectionProperties = new HashMap<>();
 		connectionProperties = getConnectionProperties(scenario);
 		
-
 		if (entityManagerFactories.containsKey(jndiName)) {
 			LOG.info("createConnection entityManagerFactory exists with jta Datasource: " + jndiName);
 		} else {
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME,
 					connectionProperties);
-
+			
 			entityManagerFactories.put(jndiName, entityManagerFactory);
 			LOG.info("createConnection entityManagerFactory does not exists and create with jta Datasource: " + jndiName);
 		}
-
+		
 		return entityManagerFactories.get(jndiName).createEntityManager();
 	}
 	
@@ -110,9 +113,10 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 	public void testConnection(Scenario scenario) {
 		createConnection(scenario);
 	}
-
+	
 	/**
-	 * get connection for selected scenario database and execute query as native query 
+	 * get connection for selected scenario database and execute query as native
+	 * query
 	 * 
 	 * @param sqlString
 	 * @param jndiName
@@ -122,16 +126,16 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 	@Override
 	public List<Object[]> executeQuery(String sqlString, Scenario scenario) {
 		List<Object[]> list = null;
-
+		
 		EntityManager entityManager = createConnection(scenario);
 		Query query = entityManager.createNativeQuery(sqlString);
 		list = query.getResultList();
-
+		
 		return list;
 	}
-
+	
 	/**
-	 * Get Connection from selected scenario EntityManager 
+	 * Get Connection from selected scenario EntityManager
 	 * 
 	 * @param entityManager
 	 * @return Connection
@@ -140,7 +144,7 @@ public class DBConnectionBean extends DBMetaData implements DBConnectionService 
 		Session hibernateSession = entityManager.unwrap(Session.class);
 		SessionImpl sessionImpl = (SessionImpl) hibernateSession;
 		Connection connection = sessionImpl.connection();
-
+		
 		return connection;
 	}
 }

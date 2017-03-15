@@ -38,7 +38,7 @@ public class AppStatistics implements Serializable{
 	private Task task = null;
 
 	@Column(nullable = false)
-	private Boolean success = null;
+	private Character success = null;
 	
 	@Column(nullable = false)
 	private String query = null;
@@ -76,12 +76,12 @@ public class AppStatistics implements Serializable{
 	}
 
 
-	public Boolean getSuccess() {
+	public Character getSuccess() {
 		return success;
 	}
 
 
-	public void setSuccess(Boolean success) {
+	public void setSuccess(Character success) {
 		this.success = success;
 	}
 

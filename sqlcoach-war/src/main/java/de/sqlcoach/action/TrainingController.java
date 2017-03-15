@@ -239,7 +239,12 @@ public class TrainingController extends HttpServlet {
 				taskTmp.setId(Long.valueOf(tf.getTaskId()));
 
 				appStatistics.setTask(taskTmp);
-				appStatistics.setSuccess(equals);
+				if(true == equals) {
+					appStatistics.setSuccess('1');
+				} else if(false == equals) {
+					appStatistics.setSuccess('0');
+				}
+				
 
 				dbAppStatisticService.insert(appStatistics);
 

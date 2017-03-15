@@ -4,9 +4,18 @@
     <!-- <persistence-unit name="postgres" transaction-type="RESOURCE_LOCAL"> -->
     	<!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Oracle DB  -->
         <!-- <jta-data-source>java:/OracleAppDS</jta-data-source> -->
-        <jta-data-source>java:/applicationDS</jta-data-source>
+        <!-- MAX DB old stand -->
+        <!-- <jta-data-source>java:/applicationDS</jta-data-source> -->
+        <!-- MAX DB new stand -->
+        <!-- <jta-data-source>java:/applicationTestDS</jta-data-source> -->
+        <!-- Postgres DB -->
+        <!-- <jta-data-source>java:/PostgresDS</jta-data-source> -->
+        <!-- MySQL DB -->
+        <jta-data-source>java:/MySqlDS</jta-data-source>
         
+
         <!-- Entities -->
         <class>de.sqlcoach.db.entities.AppStatistics</class>
         <class>de.sqlcoach.db.entities.AppUser</class>
@@ -18,8 +27,10 @@
         
         <properties>
         	<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.SAPDBDialect"/> -->
-        	<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-            <property name="hibernate.show_sql" value="false"/>
+        	<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/> -->
+        	<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> -->
+        	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         
             <!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>-->

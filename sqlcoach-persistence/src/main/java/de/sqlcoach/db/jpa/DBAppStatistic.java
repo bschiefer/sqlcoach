@@ -42,14 +42,14 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 		return appStatistics;
 	}
 
-	private AppStatisticSuccessFail checkSuccessOrFail(Character success, Long taskId, Date from, Date till) {
-		AppStatisticSuccessFail appStatisticSuccessFail = new AppStatisticSuccessFail();
+	private Integer checkSuccessOrFail(Character success, Long taskId, Date from, Date till) {
+		Integer result = 0;
 
 		Timestamp fromTimestamp = new java.sql.Timestamp(from.getTime());
 		Timestamp tillTimestamp = new java.sql.Timestamp(till.getTime());
 
 		String strQuery = "SELECT e FROM " + ENTITYNAME + " e WHERE e.task.id=:taskId "
-				+ "AND e.datecreate > from AND e.datecreate < till AND e.success=:success";
+				+ "AND e.dateCreate >:from AND e.dateCreate <:till AND e.success=:success";
 		Query query = getEntityManager().createQuery(strQuery);
 		query.setParameter("taskId", taskId);
 		query.setParameter("from", fromTimestamp);
@@ -59,14 +59,14 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 
 		for (int i = 0; i < appStatisticSuccessFails.size(); i++) {
 			if ('0' == success) {
-				appStatisticSuccessFail.setFail(appStatisticSuccessFails.size());
+				result = appStatisticSuccessFails.size();
 			} else if ('1' == success) {
-				appStatisticSuccessFail.setSuccess(appStatisticSuccessFails.size());
+				result = appStatisticSuccessFails.size();
 			}
 		}
 
-		LOG.info("Query: {} \nappStatisticSuccessFail: {}", strQuery, appStatisticSuccessFails);
-		return appStatisticSuccessFail;
+		LOG.info("Query: {} \nappStatisticSuccessFail: {}", strQuery, result);
+		return result;
 	}
 
 	// TODO refactoring 2 functions in one Method
@@ -88,12 +88,12 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 	public AppStatisticSuccessFail getByTaskId(Long taskId, Date from, Date till) {
 		LOG.info("getByTaskId ENTER taskid= {} from= {} till= {} ", taskId, from, till);
 
-		AppStatisticSuccessFail appStatisticSuccessFail = null;
+		AppStatisticSuccessFail appStatisticSuccessFail = new AppStatisticSuccessFail();
 		Character success = '1';
 		Character fail = '0';
-
-		appStatisticSuccessFail = checkSuccessOrFail(success, taskId, from, till);
-		appStatisticSuccessFail = checkSuccessOrFail(fail, taskId, from, till);
+		
+		appStatisticSuccessFail.setSuccess(checkSuccessOrFail(success, taskId, from, till));
+		appStatisticSuccessFail.setFail(checkSuccessOrFail(fail, taskId, from, till));
 
 		return appStatisticSuccessFail;
 	}

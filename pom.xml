@@ -15,7 +15,8 @@
 		<module>sqlcoach-ear</module>
 		<!-- <module>sqlcoach-integration-beans</module> -->
 		<module>sqlcoach-ejb-jdbc</module>
-		<module>sqlcoach-integration-test</module>
+		<!-- comment out to evaluate different database access between jdbc and jpa -->
+		<!-- <module>sqlcoach-integration-test</module> -->
 	</modules>
 
 	<properties>
