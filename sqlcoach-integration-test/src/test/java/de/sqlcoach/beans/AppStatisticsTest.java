@@ -8,8 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import de.sqlcoach.beans.jdbc.AppStatisticsBeanJDBC;
-import de.sqlcoach.db.entities.AppStatistics;
-import de.sqlcoach.model.AppStatistic;
+import de.sqlcoach.db.entities.AppStatistic;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 import de.sqlcoach.remoteEJB.ModulName;
 
@@ -35,9 +34,9 @@ public class AppStatisticsTest {
 
 	@Test
 	public void testGet() {
-		List<AppStatistics> appStatisticsJPA = getJPA().selectAll();
-		AppStatistics appStatisticJPA = getJPA().get(appStatisticsJPA.get(0).getId());
-		AppStatistic appStatisticJDBC = getJDBC().get(appStatisticsJPA.get(0).getId().intValue());
+		List<AppStatistic> appStatisticsJPA = getJPA().selectAll();
+		AppStatistic appStatisticJPA = getJPA().get(appStatisticsJPA.get(0).getId());
+		de.sqlcoach.model.AppStatistic appStatisticJDBC = getJDBC().get(appStatisticsJPA.get(0).getId().intValue());
 		
 		assertEquals(appStatisticJPA.getId(), Long.valueOf(appStatisticJDBC.getId()));
 		assertEquals(appStatisticJPA.getQuery(), appStatisticJDBC.getQuery());
@@ -64,7 +63,7 @@ public class AppStatisticsTest {
 	
 	@Test
 	public void testSelectAll() {
-		List<AppStatistics> appStatisticsJPA = getJPA().selectAll();
+		List<AppStatistic> appStatisticsJPA = getJPA().selectAll();
 		assertTrue(appStatisticsJPA.size() > 0);
 	}
 

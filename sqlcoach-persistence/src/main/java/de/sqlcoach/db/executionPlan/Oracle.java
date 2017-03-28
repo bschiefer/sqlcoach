@@ -61,7 +61,7 @@ public class Oracle extends Database {
 				Statement statement = connection.createStatement();
 				statement.execute("explain plan for " + query);
 
-				String planTable = "select OPERATION, OPTIONS, OBJECT_NAME, OBJECT_INSTANCE, OBJECT_TYPE, OPTIMIZER, COST, CARDINALITY, BYTES, CPU_COST, IO_COST, ACCESS_PREDICATES, TIME from "
+				String planTable = "select OPERATION, OPTIONS, OBJECT_NAME, OBJECT_INSTANCE, COST, CARDINALITY, BYTES, CPU_COST, IO_COST, ACCESS_PREDICATES from "
 						+ PLAN_TABLE_NAME 
 						+	" where PLAN_ID = (select max(PLAN_ID) from " + PLAN_TABLE_NAME + ")"; //last inserted row from plan table
 				viewResultSet = execute(planTable, connection);

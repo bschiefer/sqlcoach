@@ -8,14 +8,6 @@
         <jta-data-source>java:/applicationDS</jta-data-source>
         
         <!-- Entities -->
-        <class>de.sqlcoach.db.entities.AppStatistics</class>
-        <class>de.sqlcoach.db.entities.AppUser</class>
-        <class>de.sqlcoach.db.entities.Scenario</class>
-        <class>de.sqlcoach.db.entities.ScenarioTable</class>
-        <class>de.sqlcoach.db.entities.Task</class>
-        <class>de.sqlcoach.db.entities.Taskgroup</class>
-        
-        
         <properties>
         	<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.show_sql" value="false"/>

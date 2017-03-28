@@ -32,6 +32,7 @@ public class ScenarioTable implements Serializable{
 
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="scenario_id", referencedColumnName="id")
+	@Id
 	private Scenario scenario = null;
 	
 	@Id

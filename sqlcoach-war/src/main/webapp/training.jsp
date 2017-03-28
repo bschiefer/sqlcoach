@@ -127,30 +127,35 @@
       </custom:tdForm>
     </tr>
     </c:if>
-
     <tr>
       <td>&nbsp;</td>
-      <td><html:submit><fmt:message key="button.check" /></html:submit></td>
+      <td>
+        <html:submit><fmt:message key="button.check" /></html:submit>
+        <!-- EXPLAIN PLAN -->
+        <c:if test="${TrainingForm.status == 'check'}">
+		  <button id="explainBtn" onclick="explainFunction()" type="button"><fmt:message key="training.explainPlan"/></button>
+		</c:if>
+        <!-- SAMPLE SOLUTION HINT-->
+		<c:if test="${sampleSolutionHintCount <= user_trials[task.idToString]}" >
+		  <button id="sampleSolutionHintBtn" onclick="sampleSolutionHintFunction()" type="button"><fmt:message key="training.sampleSolutionHint"/></button>
+		</c:if>
+      </td>
     </tr>
+    <!-- SAMPLE SOLUTION HINT-->
+    <tr id="sampleSolutionHint" style="display: none;"><!-- SAMPLE SOLUTION HINT-->
+     <td></td>
+     <td>
+       <span style="color:black">
+         <b><fmt:message key="training.sampleSolutionHint"/>: <c:out value="${sampleSolutionHint}" /></b>
+       </span>
+     </td>
+    </tr> 
     <custom:trHLine/>
   </custom:tableForm>  
-</html:form>  
-
-<!-- SAMPLE SOLUTION HINT-->
-<c:if test="${sampleSolutionHintCount <= user_trials[task.idToString]}" >
-<button id="sampleSolutionHintBtn" onclick="sampleSolutionHintFunction()"><fmt:message key="training.sampleSolutionHint"/></button>
-<div id="sampleSolutionHint" style="display: none;">
-<br />
-<c:out value="${sampleSolutionHint}" />
-</div>
-</c:if>
-
-<br />
-<br />
+</html:form>
 
 <!-- EXPLAIN PLAN -->
 <c:if test="${TrainingForm.status == 'check'}">
-<button id="explainBtn" onclick="explainFunction()"><fmt:message key="training.explainPlan"/></button>
 <div id="explain" style="display: none;">
 <c:set var="explainViewResultSet" scope="request" value="explainResultSet"/>
 
@@ -165,7 +170,6 @@
 
 <!-- TRAINEE SOLUTION -->
 <c:set var="inputViewResultSet" scope="request" value="traineeViewResultSet"/>
-
 <c:if test="${TrainingForm.status == 'check'}">
 <div class="tableHeader1">
   <fmt:message key="training.traineeSolution"/> &mdash; <fmt:message key="training.records"/> : ${traineeViewResultSetCount}

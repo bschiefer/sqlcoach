@@ -70,7 +70,6 @@ public class DBTaskgroup extends DBBase implements DBTaskgroupService {
 		for (Taskgroup taskgroup : (List<Taskgroup>)taskgroups) {
 			taskgroup.setNumber(number);
 			number++;
-//			LOG.info("MPA taskgroup: {}", taskgroup);
 		}
 		
 		LOG.info("Query: {} \nSize: {}", strQuery, taskgroups.size());

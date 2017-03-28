@@ -47,7 +47,7 @@ import de.sqlcoach.beans.DBScenarioService;
 import de.sqlcoach.beans.DBScenarioTableService;
 import de.sqlcoach.beans.DBTaskService;
 import de.sqlcoach.beans.DBTaskgroupService;
-import de.sqlcoach.db.entities.AppStatistics;
+import de.sqlcoach.db.entities.AppStatistic;
 import de.sqlcoach.db.entities.Scenario;
 import de.sqlcoach.db.entities.ScenarioTable;
 import de.sqlcoach.db.entities.Task;
@@ -230,7 +230,7 @@ public class TrainingController extends HttpServlet {
 
 			// add AppStatistic entry
 			if (tf.getTaskId() != null && !tf.getTaskId().equals("null")) {
-				final AppStatistics appStatistics = new AppStatistics();
+				final AppStatistic appStatistics = new AppStatistic();
 				appStatistics.setQuery(tf.getQuery());
 				appStatistics.setSessionID(request.getSession().getId());
 				Date dateCreate = new Date();

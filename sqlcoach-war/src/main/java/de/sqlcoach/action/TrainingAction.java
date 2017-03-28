@@ -75,8 +75,15 @@ public class TrainingAction extends Action {
 		// Trainee Solution as ViewResultSet
 		DBConnectionService dbConnectionService = DBRemoteEJBClient.getEJB(DBConnectionService.class.getName(),
 				DBConnectionService.BEANNAME);
-		final ViewResultSet traineeViewResultSet = dbConnectionService.get(tf.getQuery(), scenario);
-
+		
+		ViewResultSet traineeViewResultSet = null;
+		
+		if(null != scenario) {
+			traineeViewResultSet = dbConnectionService.get(tf.getQuery(), scenario);
+		} else {
+			return mapping.findForward("forward"); //session expired, return to mainpage
+		}
+		
 		if (traineeViewResultSet == null)
 			Alert.catchError("alert.error.wrongQuery", request);
 

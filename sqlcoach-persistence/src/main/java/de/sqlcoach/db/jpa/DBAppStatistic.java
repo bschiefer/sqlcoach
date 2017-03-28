@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import de.sqlcoach.beans.DBAppStatisticService;
 import de.sqlcoach.db.entities.AppStatisticSuccessFail;
-import de.sqlcoach.db.entities.AppStatistics;
+import de.sqlcoach.db.entities.AppStatistic;
 
 /**
  * Class extends methods to manipulate AppStatistic Entity
@@ -21,7 +21,7 @@ import de.sqlcoach.db.entities.AppStatistics;
 public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(DBAppStatistic.class);
-	private static final String ENTITYNAME = AppStatistics.class.getSimpleName();
+	private static final String ENTITYNAME = AppStatistic.class.getSimpleName();
 	private static final String SEQUENCENAME = "S_APP_STATISTIC";
 
 	public DBAppStatistic() {
@@ -29,13 +29,13 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 	}
 
 	@Override
-	public AppStatistics get(Long id) {
+	public AppStatistic get(Long id) {
 		LOG.info("get ENTER id= {} ", id);
 
 		String strQuery = "SELECT e FROM " + ENTITYNAME + " e WHERE e.id=:id";
 		Query query = getEntityManager().createQuery(strQuery);
 		query.setParameter("id", id);
-		AppStatistics appStatistics = findByQuerySingleResult(query);
+		AppStatistic appStatistics = findByQuerySingleResult(query);
 
 		LOG.info("Query: {} ", strQuery);
 
@@ -99,28 +99,28 @@ public class DBAppStatistic extends DBBase implements DBAppStatisticService {
 	}
 
 	@Override
-	public List<AppStatistics> selectAll() {
+	public List<AppStatistic> selectAll() {
 		String strQuery = "SELECT e FROM " + ENTITYNAME + " e";
 		Query query = getEntityManager().createQuery(strQuery);
-		List<AppStatistics> appStatistics = findByQuery(query);
+		List<AppStatistic> appStatistics = findByQuery(query);
 
 		LOG.info("Query: {} \nSize: {}", strQuery, appStatistics.size());
 		return appStatistics;
 	}
 
 	@Override
-	public void insert(AppStatistics appStatistic) {
+	public void insert(AppStatistic appStatistic) {
 		appStatistic.setId(generateNextId(SEQUENCENAME));
 		super.insertT(appStatistic);
 	}
 
 	@Override
-	public AppStatistics update(AppStatistics appStatistic) {
+	public AppStatistic update(AppStatistic appStatistic) {
 		return super.updateT(appStatistic);
 	}
 
 	@Override
-	public void delete(AppStatistics appStatistic) {
+	public void delete(AppStatistic appStatistic) {
 		super.deleteT(appStatistic);
 	}
 }

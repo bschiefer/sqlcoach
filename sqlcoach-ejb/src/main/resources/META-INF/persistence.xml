@@ -17,7 +17,7 @@
         
 
         <!-- Entities -->
-        <class>de.sqlcoach.db.entities.AppStatistics</class>
+        <class>de.sqlcoach.db.entities.AppStatistic</class>
         <class>de.sqlcoach.db.entities.AppUser</class>
         <class>de.sqlcoach.db.entities.Scenario</class>
         <class>de.sqlcoach.db.entities.ScenarioTable</class>
@@ -30,7 +30,7 @@
         	<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/> -->
         	<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> -->
         	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
         
             <!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>-->
