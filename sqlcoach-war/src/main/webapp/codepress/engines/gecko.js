@@ -1,7 +1,7 @@
 /*
  * CodePress - Real Time Syntax Highlighting Editor written in JavaScript - http://codepress.org/
  * 
- * Copyright (C) 2007 Fernando M.A.d.S. <fermads@gmail.com>
+ * Copyright (C) 2007, 2017 Fernando M.A.d.S. <fermads@gmail.com>
  *
  * Contributors :
  *
