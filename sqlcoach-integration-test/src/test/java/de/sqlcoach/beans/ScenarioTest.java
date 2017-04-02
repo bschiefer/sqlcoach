@@ -15,6 +15,7 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package de.sqlcoach.beans;
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -29,17 +30,19 @@ import de.sqlcoach.remoteEJB.ModulName;
 public class ScenarioTest {
 	private DBScenarioService scenarioJPA = null;
 	private de.sqlcoach.beans.jdbc.interfaces.DBScenarioService scenarioJDBC = null;
-
+	
 	public DBScenarioService getJPA() {
 		if (null == scenarioJPA) {
-			scenarioJPA = DBRemoteEJBClient.getEJB(DBScenarioService.class.getName(), DBScenarioService.BEANNAME, ModulName.JPA);
+			scenarioJPA = DBRemoteEJBClient.getEJB(DBScenarioService.class.getName(), DBScenarioService.BEANNAME,
+					ModulName.JPA);
 		}
 		return scenarioJPA;
 	}
-
+	
 	public de.sqlcoach.beans.jdbc.interfaces.DBScenarioService getJDBC() {
 		if (null == scenarioJDBC) {
-			scenarioJDBC = DBRemoteEJBClient.getEJB(de.sqlcoach.beans.jdbc.interfaces.DBScenarioService.class.getName(), ScenarioBeanJDBC.class.getSimpleName(), ModulName.JDBC);
+			scenarioJDBC = DBRemoteEJBClient.getEJB(de.sqlcoach.beans.jdbc.interfaces.DBScenarioService.class.getName(),
+					ScenarioBeanJDBC.class.getSimpleName(), ModulName.JDBC);
 		}
 		return scenarioJDBC;
 	}

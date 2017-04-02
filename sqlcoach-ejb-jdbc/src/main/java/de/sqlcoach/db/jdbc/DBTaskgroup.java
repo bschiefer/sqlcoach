@@ -60,7 +60,8 @@ public class DBTaskgroup {
     final String query = "SELECT * FROM Taskgroup WHERE id=?";
     try (final PreparedStatement pstmt = cn.prepareStatement(query)) {
 
-      pstmt.setString(1, id);
+//      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.valueOf(id));
       try (final ResultSet resultset = pstmt.executeQuery()) {
         if (resultset.next()) {
           model = new Taskgroup();
@@ -119,7 +120,8 @@ public class DBTaskgroup {
     final String query = "SELECT * FROM Taskgroup WHERE scenario_id = ? ORDER BY rank";
     try (final PreparedStatement pstmt = cn.prepareStatement(query)) {
 
-      pstmt.setString(1, id);
+//      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.valueOf(id));
       try (final ResultSet resultset = pstmt.executeQuery()) {
 
         int number = 1;

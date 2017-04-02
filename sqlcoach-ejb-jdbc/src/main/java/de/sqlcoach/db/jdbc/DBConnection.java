@@ -191,14 +191,33 @@ public class DBConnection implements AutoCloseable {
 	public static Connection getSimpleConnection(String dataSourceName) {
 
 		log.info("getSimpleConnection ENTER ");
-		String driver = "com.sap.dbtech.jdbc.DriverSapDB";
-		// String url = "jdbc:sapdb://localhost/SQLCOACH";
-		// String user = "SQLCOACH_DBA";
-		// String password = "sqlcoach";
-		String url = "jdbc:sapdb://localhost/TEST";
-		String user = "Test";
-		String password = "test";
+	 //Oracle
+//		String driver = "oracle.jdbc.driver.OracleDriver";
+//		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//		String user = "SqlcoachDBA";
+//		String password = "sqlcoach";
+		
+		//MaxDB
+//		String driver = "com.sap.dbtech.jdbc.DriverSapDB";
+//		String url = "jdbc:sapdb://localhost/SQLCOACH";
+//		String user = "SQLCOACH_DBA";
+//		String password = "sqlcoach";
+//		String url = "jdbc:sapdb://localhost/TEST";
+//		String user = "Test";
+//		String password = "test";
 
+	  //PostgreSQL
+//		String driver = "postgresql-9.4-1205.jdbc42.jar";
+//		String url = "jdbc:postgresql://localhost:5432/postgres";
+//		String user = "postgres";
+//		String password = "sqlcoach";
+		
+		//MySQL
+		String driver = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://localhost:3306/sqlcoach";
+		String user = "root";
+		String password = "Sqlcoach_Mysql";
+		
 		Connection cn = null;
 		// final Properties props = new Properties();
 		// try {

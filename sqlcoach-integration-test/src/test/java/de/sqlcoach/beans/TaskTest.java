@@ -15,6 +15,7 @@
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 package de.sqlcoach.beans;
+
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -30,17 +31,18 @@ import de.sqlcoach.remoteEJB.ModulName;
 public class TaskTest {
 	private DBTaskService taskJPA = null;
 	private de.sqlcoach.beans.jdbc.interfaces.DBTaskService taskJDBC = null;
-
+	
 	public DBTaskService getJPA() {
 		if (null == taskJPA) {
 			taskJPA = DBRemoteEJBClient.getEJB(DBTaskService.class.getName(), DBTaskService.BEANNAME, ModulName.JPA);
 		}
 		return taskJPA;
 	}
-
+	
 	public de.sqlcoach.beans.jdbc.interfaces.DBTaskService getJDBC() {
 		if (null == taskJDBC) {
-			taskJDBC = DBRemoteEJBClient.getEJB(de.sqlcoach.beans.jdbc.interfaces.DBTaskService.class.getName(), TaskBeanJDBC.class.getSimpleName(), ModulName.JDBC);
+			taskJDBC = DBRemoteEJBClient.getEJB(de.sqlcoach.beans.jdbc.interfaces.DBTaskService.class.getName(),
+					TaskBeanJDBC.class.getSimpleName(), ModulName.JDBC);
 		}
 		return taskJDBC;
 	}
@@ -53,27 +55,27 @@ public class TaskTest {
 		de.sqlcoach.model.Task taskJDBC = getJDBC().get(id.toString());
 		
 		int number = 0;
-		if(null != taskJPA.getNumber()) {
+		if (null != taskJPA.getNumber()) {
 			number = taskJPA.getNumber().intValue();
 		}
 		
 		int failedQueries = 0;
-		if(null != taskJPA.getFailedQueries()) {
+		if (null != taskJPA.getFailedQueries()) {
 			failedQueries = taskJPA.getFailedQueries().intValue();
 		}
 		
 		int hintTrials = 0;
-		if(null != taskJPA.getHint_trials()) {
+		if (null != taskJPA.getHint_trials()) {
 			hintTrials = taskJPA.getHint_trials().intValue();
 		}
 		
 		int solutionTrials = 0;
-		if(null != taskJPA.getSolution_trials()) {
+		if (null != taskJPA.getSolution_trials()) {
 			solutionTrials = taskJPA.getSolution_trials().intValue();
 		}
 		
 		int successQueries = 0;
-		if(null != taskJPA.getSuccessQueries()) {
+		if (null != taskJPA.getSuccessQueries()) {
 			successQueries = taskJPA.getSuccessQueries().intValue();
 		}
 		

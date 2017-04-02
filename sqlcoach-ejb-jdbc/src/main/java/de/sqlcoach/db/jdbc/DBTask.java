@@ -62,7 +62,8 @@ public class DBTask {
     Task model = null;
     final String query = "SELECT * FROM Task WHERE id = ?";
     try (final PreparedStatement pstmt = cn.prepareStatement(query);) {
-      pstmt.setString(1, id);
+//      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.valueOf(id));
       try (ResultSet resultset = pstmt.executeQuery();) {
         if (resultset.next()) {
           model = new Task();
@@ -128,7 +129,8 @@ public class DBTask {
 
     try (final PreparedStatement pstmt = cn.prepareStatement(query);) {
 
-      pstmt.setString(1, id);
+//      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.valueOf(id));
       try (final ResultSet resultset = pstmt.executeQuery()) {
 
         int number = 1;
@@ -168,10 +170,11 @@ public class DBTask {
 
     final String query = "SELECT t.* FROM Task t JOIN TaskGroup tg ON t.taskgroup_id = tg.id " +
                          "WHERE scenario_id = ? " +
-                         "ORDER BY rank";
+                         "ORDER BY t.rank";
     try (final PreparedStatement pstmt = cn.prepareStatement(query);) {
 
-      pstmt.setString(1, id);
+//      pstmt.setString(1, id);
+      pstmt.setInt(1, Integer.valueOf(id));
       try (final ResultSet resultset = pstmt.executeQuery()) {
         int number = 1;
         while (resultset.next()) {

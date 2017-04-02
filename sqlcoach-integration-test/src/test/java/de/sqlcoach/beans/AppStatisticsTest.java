@@ -19,12 +19,14 @@ package de.sqlcoach.beans;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 
 import de.sqlcoach.beans.jdbc.AppStatisticsBeanJDBC;
 import de.sqlcoach.db.entities.AppStatistic;
+import de.sqlcoach.db.entities.AppStatisticSuccessFail;
 import de.sqlcoach.remoteEJB.DBRemoteEJBClient;
 import de.sqlcoach.remoteEJB.ModulName;
 
@@ -33,21 +35,24 @@ public class AppStatisticsTest {
 	
 	private DBAppStatisticService appStatisticsJPA = null;
 	private de.sqlcoach.beans.jdbc.interfaces.DBAppStatisticService appStatisticsJDBC = null;
-
+	
 	public DBAppStatisticService getJPA() {
 		if (null == appStatisticsJPA) {
-			appStatisticsJPA = DBRemoteEJBClient.getEJB(DBAppStatisticService.class.getName(), DBAppStatisticService.BEANNAME, ModulName.JPA);
+			appStatisticsJPA = DBRemoteEJBClient.getEJB(DBAppStatisticService.class.getName(), DBAppStatisticService.BEANNAME,
+					ModulName.JPA);
 		}
 		return appStatisticsJPA;
 	}
-
+	
 	public de.sqlcoach.beans.jdbc.interfaces.DBAppStatisticService getJDBC() {
 		if (null == appStatisticsJDBC) {
-			appStatisticsJDBC = DBRemoteEJBClient.getEJB(de.sqlcoach.beans.jdbc.interfaces.DBAppStatisticService.class.getName(), AppStatisticsBeanJDBC.class.getSimpleName(), ModulName.JDBC);
+			appStatisticsJDBC = DBRemoteEJBClient.getEJB(
+					de.sqlcoach.beans.jdbc.interfaces.DBAppStatisticService.class.getName(),
+					AppStatisticsBeanJDBC.class.getSimpleName(), ModulName.JDBC);
 		}
 		return appStatisticsJDBC;
 	}
-
+	
 	@Test
 	public void testGet() {
 		List<AppStatistic> appStatisticsJPA = getJPA().selectAll();
@@ -63,18 +68,20 @@ public class AppStatisticsTest {
 	
 	@Test
 	public void testGetByTaskId() {
-//		Long taskId = 1L;
-//		Date from = new Date();
-//		Date till = new Date();
-		
-		//TODO Fehler AppStatisticSuccessFail
-//		AppStatisticSuccessFail appStatisticsJPA = getJPA().getByTaskId(taskId, from, till);
-//		System.out.println("JPA: " + appStatisticsJPA);
-		
-//		de.sqlcoach.model.AppStatisticSuccessFail appStatisticJDBC = getJDBC().getByTaskId("1", from, till);
-//		System.out.println("JDBC: " + appStatisticJDBC.getSuccess());
-		
-//		assertEquals(appStatisticsJPA, appStatisticJDBC);
+		// check appStatistic entries exists
+		if (null != getJPA().selectAll() && 0 < getJPA().selectAll().size()) {
+			List<AppStatistic> appStatisticsJPA = getJPA().selectAll();
+			Long taskId = appStatisticsJPA.get(0).getId();
+			Date from = new Date();
+			Date till = new Date();
+			
+			// TODO Fehler AppStatisticSuccessFail
+			AppStatisticSuccessFail appStatisticJPA = getJPA().getByTaskId(taskId, from, till);
+			de.sqlcoach.model.AppStatisticSuccessFail appStatisticJDBC = getJDBC().getByTaskId(taskId.toString(), from, till);
+			
+			assertEquals(appStatisticJPA.getFail(), appStatisticJDBC.getFail());
+			assertEquals(appStatisticJPA.getSuccess(), appStatisticJDBC.getSuccess());
+		}
 	}
 	
 	@Test
@@ -82,5 +89,5 @@ public class AppStatisticsTest {
 		List<AppStatistic> appStatisticsJPA = getJPA().selectAll();
 		assertTrue(appStatisticsJPA.size() > 0);
 	}
-
+	
 }

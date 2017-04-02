@@ -125,7 +125,8 @@ public class DBScenarioTable {
 
     try (final PreparedStatement pstmt = cn.prepareStatement(query);) {
       
-      pstmt.setString(1, id);
+//      pstmt.setString(1, id);
+    	pstmt.setInt(1, Integer.valueOf(id));
       try (final ResultSet resultset = pstmt.executeQuery()) {
 
         while (resultset.next()) {

@@ -14,17 +14,18 @@
     You should have received a copy of the GNU Affero General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>de.hskl.sqlcoach</groupId>
-    <artifactId>sqlcoach</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>sqlcoach-ejb-jdbc</artifactId>
-  <packaging>ejb</packaging>
-  
-  <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.hskl.sqlcoach</groupId>
+		<artifactId>sqlcoach</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>sqlcoach-ejb-jdbc</artifactId>
+	<packaging>ejb</packaging>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -52,6 +53,27 @@
 			<artifactId>sapdbc</artifactId>
 			<version>7.7.07.50</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/cn.guoyukun.jdbc/oracle-ojdbc6 -->
+		<!-- http://stackoverflow.com/questions/25128219/missing-artifact-com-oracleojdbc6jar11-2-0-in-pom-xml -->
+		<!-- mvn install:install-file -Dfile=C:\sqldeveloper\jdbc\lib\ojdbc7.jar 
+			-DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.1 -Dpackaging=jar -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.0.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.0.8</version>
+		</dependency>
 		<!-- Import the EJB API. -->
 		<dependency>
 			<groupId>org.jboss.spec.javax.ejb</groupId>
@@ -60,11 +82,8 @@
 		</dependency>
 
 		<!-- Import the JPA API. -->
-		<!-- <dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<scope>provided</scope>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.hibernate.javax.persistence</groupId> <artifactId>hibernate-jpa-2.1-api</artifactId> 
+			<scope>provided</scope> </dependency> -->
 	</dependencies>
 	<build>
 		<!-- Specify the artifact name, this is referred to in the EAR's application.xml -->
