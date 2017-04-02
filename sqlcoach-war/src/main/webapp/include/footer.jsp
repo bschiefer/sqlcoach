@@ -13,6 +13,7 @@
             by
                <a href="http://www.christophgerstle.de">Christoph Gerstle</a>, 
                <a href="http://www.flomedia.de">Florian Moritz</a>, 
+               <a href="">Michael Paulus</a>, 
                <a href="http://www.hs-kl.de/~schiefer">Bernhard Schiefer</a>
 <%--            | 
             <a href="http://sourceforge.net/projects/sqlcoach">SQLcoach at Sourceforge.net</a>
