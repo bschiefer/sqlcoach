@@ -1,0 +1,2 @@
+﻿INSERT INTO app_user (id,nickname,password,title,firstname,lastname,email,role)  VALUES (0,'superadmin', '098f6bcd4621d373cade4e832627b4f6', '', 'Super', 'Admin', '', 'superadmin');
+INSERT INTO app_user (id, nickname,password,title,firstname,lastname,email,role)  VALUES (1, 'change_me_nick', '098f6bcd4621d373cade4e832627b4f6', '', 'change_me_firstname', 'change_me_lastname', 'change_me_mail', 'admin');

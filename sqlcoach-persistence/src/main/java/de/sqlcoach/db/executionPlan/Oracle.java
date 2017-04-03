@@ -82,11 +82,9 @@ public class Oracle extends Database {
 						+	" where PLAN_ID = (select max(PLAN_ID) from " + PLAN_TABLE_NAME + ")"; //last inserted row from plan table
 				viewResultSet = execute(planTable, connection);
 			} else if (0 == checkPlanTableExists(connection)) {
-				// TODO create @$ORACLE_HOME/rdbms/admin/catplan.sql
-				LOG.info("create @$ORACLE_HOME/rdbms/admin/catplan.sql");
+				LOG.error("create @$ORACLE_HOME/rdbms/admin/catplan.sql");
 			} else {
-				// TODO More than one result from:
-				LOG.info("More than one result from: select table_name from user_tables where table_name = \'" + PLAN_TABLE_NAME
+				LOG.error("More than one result from: select table_name from user_tables where table_name = \'" + PLAN_TABLE_NAME
 						+ "\'");
 			}
 		} catch (SQLException e) {
