@@ -40,7 +40,7 @@
 <tr>
 	<td>type</td>
 	<td>css=body</td>
-	<td>SELECT persnr, jahr, COUNT(datum) as anz_eintraege FROM (SELECT persnr FROM Personal WHERE gehalt &gt; 2000) CROSS JOIN ( SELECT DISTINCT TO_CHAR(datum, 'YYYY') jahr FROM akte WHERE datum &gt;= '2002-01-01') LEFT JOIN (SELECT persnr, TO_CHAR(datum, 'YYYY') jahr, datum FROM Akte ) USING (persnr, jahr) GROUP BY persnr, jahr ORDER BY persnr, jahr</td>
+	<td>SELECT persnr, jahr, COUNT(datum) as anz_eintraege FROM (SELECT persnr FROM Personal WHERE gehalt &gt; 2000) CROSS JOIN ( SELECT DISTINCT TO_CHAR(datum,'YYYY') jahr FROM akte WHERE TO_CHAR(datum,'YYYY') &gt;= '2002') LEFT JOIN (SELECT persnr, TO_CHAR(datum,'YYYY') jahr, datum FROM Akte ) USING (persnr, jahr) GROUP BY persnr, jahr ORDER BY persnr, jahr</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
