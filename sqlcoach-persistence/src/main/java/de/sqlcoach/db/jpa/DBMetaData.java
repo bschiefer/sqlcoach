@@ -141,6 +141,27 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 	}
 	
 	/**
+	 * Helper to determine the correct database user name 
+	 * 
+	 * @param connection
+	 * @return String
+	 */
+	private String getDatabaseUsername(Connection connection) {
+		String username = null;
+		try {
+			// special case Postgres
+			if(getDatabaseProductName(connection).toUpperCase().equals("POSTGRESQL")){
+				username = connection.getSchema();
+			} else {
+				username = connection.getMetaData().getUserName();
+			}
+		} catch (SQLException e) {
+			LOG.error("getDatabaseUsername: " + e);
+		}
+		return username;
+	}
+	
+	/**
 	 * Helper for readAllTables(String dataSourceName)
 	 * 
 	 * @param connection
@@ -158,8 +179,8 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		}
 
 		final String[] names = { "TABLE" };
-		final ResultSet tableNames = metadata.getTables(null, metadata.getUserName(), "%", names);
-
+		final ResultSet tableNames = metadata.getTables(connection.getCatalog(), getDatabaseUsername(connection), "%", names);
+		
 		while (tableNames.next()) {
 			if (LOG.isInfoEnabled()) {
 				LOG.info("Pre Check: tableNames.getString(\"TABLE_NAME\")=" + tableNames.getString("TABLE_NAME"));
@@ -256,9 +277,10 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 	 * @return HashMap<String, String>
 	 * @throws SQLException
 	 */
-	private HashMap<String, String> getPkMap(Connection connection, String table) throws SQLException {
+	private HashMap<String, String> getPkMap(Connection connection, String userName, String catalog, String table) throws SQLException {
 		HashMap<String, String> pk_map = new HashMap<String, String>();
-		try (final ResultSet primaryKeys = connection.getMetaData().getPrimaryKeys(connection.getCatalog(), connection.getMetaData().getUserName(), table)) {
+
+		try (final ResultSet primaryKeys = connection.getMetaData().getPrimaryKeys(catalog, userName, table)) {
 			while (primaryKeys.next()) {
 				String pk_name = primaryKeys.getString("COLUMN_NAME");
 				if (LOG.isDebugEnabled())
@@ -278,11 +300,11 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 	 * @return
 	 * @throws SQLException
 	 */
-	private HashMap<String, String> getFkData(Connection connection, String table, String fkValue) throws SQLException {
+	private HashMap<String, String> getFkData(Connection connection, String userName, String catalog, String table, String fkValue) throws SQLException {
 		final HashMap<String, String> fk_col_map = new HashMap<String, String>();
 
-		try (final ResultSet foreignKeys = connection.getMetaData().getImportedKeys(connection.getCatalog(),
-				connection.getMetaData().getUserName(), table)) {
+		try (final ResultSet foreignKeys = connection.getMetaData().getImportedKeys(catalog,
+				userName, table)) {
 			while (foreignKeys.next()) {
 				String fk_key = foreignKeys.getString("FKCOLUMN_NAME");
 				String fk_value = foreignKeys.getString(fkValue);
@@ -306,12 +328,12 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 	 * @return
 	 * @throws SQLException
 	 */
-	private List<MetaTableColumn> getMetaTableColumns(Connection connection, String table, HashMap<String, String> pk_map,
+	private List<MetaTableColumn> getMetaTableColumns(Connection connection, String userName, String catalog, String table, HashMap<String, String> pk_map,
 			HashMap<String, String> fk_tab_map, HashMap<String, String> fk_col_map) throws SQLException {
 		List<MetaTableColumn> metaTableColumnCol = new ArrayList<MetaTableColumn>();
 
-		try (final ResultSet columns = connection.getMetaData().getColumns(connection.getCatalog(),
-				connection.getMetaData().getUserName(), table, "%")) {
+		try (final ResultSet columns = connection.getMetaData().getColumns(catalog,
+				userName, table, "%")) {
 			while (columns.next()) {
 				MetaTableColumn metaTableColumn = new MetaTableColumn();
 				metaTableColumn.setName(columns.getString("COLUMN_NAME"));
@@ -355,14 +377,20 @@ public class DBMetaData extends DBConnectionBase implements DBConnectionService{
 		}
 		
 		table = table.toUpperCase();
+		if(getDatabaseProductName(connection).toUpperCase().equals("POSTGRESQL")){
+			table = table.toLowerCase();
+		}
+		
 		List<MetaTableColumn> metaTableColumnCol = new ArrayList<MetaTableColumn>();
+		String catalog = connection.getCatalog();
+		String userName = getDatabaseUsername(connection);
+		
+		HashMap<String, String> pk_map = getPkMap(connection, userName, catalog, table);
+		HashMap<String, String> fk_tab_map = getFkData(connection, userName, catalog, table, PRIMARY_KEY_TABLE_NAME);
+		HashMap<String, String> fk_col_map = getFkData(connection, userName, catalog, table, PRIMARY_KEY_COLUMN_NAME);
 
-		HashMap<String, String> pk_map = getPkMap(connection, table);
-		HashMap<String, String> fk_tab_map = getFkData(connection, table, PRIMARY_KEY_TABLE_NAME);
-		HashMap<String, String> fk_col_map = getFkData(connection, table, PRIMARY_KEY_COLUMN_NAME);
-
-		metaTableColumnCol = getMetaTableColumns(connection, table, pk_map, fk_tab_map, fk_col_map);
-
+		metaTableColumnCol = getMetaTableColumns(connection, userName, catalog, table, pk_map, fk_tab_map, fk_col_map); 
+		
 		return metaTableColumnCol;
 	}
 
