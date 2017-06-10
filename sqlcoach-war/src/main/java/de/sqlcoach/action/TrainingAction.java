@@ -111,10 +111,6 @@ public class TrainingAction extends Action {
 
 		// explain plan
 		final ViewResultSet explain = dbConnectionService.getExplainPlan(tf.getQuery(), scenario);
-
-		if (explain == null)
-			Alert.catchError("alert.error.wrongQuery", request);
-
 		int resultExplainCnt = (explain != null && explain.getRows() != null) ? explain.getRows().size() : 0;
 
 		request.setAttribute("explainResultSet", explain);
