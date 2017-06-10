@@ -27,7 +27,7 @@
     <c:url var="url" value="exercise" >
       <c:param name="view" value="taskgroup" />
       <c:param name="status" value="get" />
-      <c:param name="scenario_id" value="${scenario}" />
+      <c:param name="scenario_id" value="${scenario.id}" />
     </c:url>
   </c:if>
     <a href='<c:out value="${url}"/>'><fmt:message key="training.backToTask" /></a>
@@ -99,12 +99,13 @@
       <td colspan="2"><c:out value ="${scenario.description}" /> 
 <c:choose><c:when test="${not empty taskgroup.description}">
       &rarr; <c:out value ="${taskgroup.description}" /> 
+      <c:if test="${not empty number}">
+      	&rarr; <fmt:message key="training.task" /> ${number} 
+	</c:if>
 </c:when><c:otherwise>
       &rarr; <fmt:message key='exercise.freeTraining' />
 </c:otherwise></c:choose>
-<c:if test="${not empty number}">
-      &rarr; <fmt:message key="training.task" /> ${number} 
-</c:if>
+
       </td>
     </custom:trFormHeader>
     <custom:trHLine/>
